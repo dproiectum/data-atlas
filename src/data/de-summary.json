@@ -1,0 +1,1214 @@
+[
+  {
+    "id": "DE.01",
+    "name": "Fundamentals & Concepts",
+    "children": [
+      {
+        "label": "Data Engineering Fundamentals",
+        "children": []
+      },
+      {
+        "label": "Idempotency",
+        "children": []
+      },
+      {
+        "label": "Batch vs Streaming",
+        "children": []
+      },
+      {
+        "label": "Structured / Semi-structured / Unstructured Data",
+        "children": []
+      },
+      {
+        "label": "Schema",
+        "children": []
+      },
+      {
+        "label": "Serialization",
+        "children": []
+      },
+      {
+        "label": "Compression",
+        "children": []
+      },
+      {
+        "label": "Data Freshness",
+        "children": []
+      },
+      {
+        "label": "Data Lineage",
+        "children": []
+      },
+      {
+        "label": "Data Contracts",
+        "children": []
+      },
+      {
+        "label": "Data Products",
+        "children": []
+      },
+      {
+        "label": "Exactly-once / At-least-once / At-most-once",
+        "children": []
+      }
+    ]
+  },
+  {
+    "id": "DE.02",
+    "name": "Data Architecture",
+    "children": [
+      {
+        "label": "Data Warehouse",
+        "children": []
+      },
+      {
+        "label": "Data Lake",
+        "children": []
+      },
+      {
+        "label": "Lakehouse",
+        "children": []
+      },
+      {
+        "label": "Data Mart",
+        "children": []
+      },
+      {
+        "label": "Medallion Architecture",
+        "children": []
+      },
+      {
+        "label": "Lambda Architecture",
+        "children": []
+      },
+      {
+        "label": "Kappa Architecture",
+        "children": []
+      },
+      {
+        "label": "Data Mesh",
+        "children": []
+      },
+      {
+        "label": "Data Fabric",
+        "children": []
+      },
+      {
+        "label": "Modern Data Stack",
+        "children": []
+      }
+    ]
+  },
+  {
+    "id": "DE.03",
+    "name": "Data Modeling",
+    "children": [
+      {
+        "label": "Relational Modeling",
+        "children": []
+      },
+      {
+        "label": "Dimensional Modeling",
+        "children": [
+          "Fact Tables",
+          "Dimension Tables",
+          "Star Schema",
+          "Snowflake Schema",
+          "Slowly Changing Dimensions (SCD)"
+        ]
+      },
+      {
+        "label": "Normalization / Denormalization",
+        "children": []
+      },
+      {
+        "label": "Data Vault",
+        "children": []
+      },
+      {
+        "label": "One Big Table",
+        "children": []
+      },
+      {
+        "label": "Primary / Foreign Keys",
+        "children": []
+      },
+      {
+        "label": "Cardinality",
+        "children": []
+      }
+    ]
+  },
+  {
+    "id": "DE.04",
+    "name": "Data Ingestion",
+    "children": [
+      {
+        "label": "Batch Ingestion",
+        "children": []
+      },
+      {
+        "label": "Streaming Ingestion",
+        "children": []
+      },
+      {
+        "label": "APIs",
+        "children": []
+      },
+      {
+        "label": "Files",
+        "children": [
+          "CSV",
+          "JSON",
+          "Parquet",
+          "Avro",
+          "ORC"
+        ]
+      },
+      {
+        "label": "Database Replication",
+        "children": []
+      },
+      {
+        "label": "CDC - Change Data Capture",
+        "children": []
+      },
+      {
+        "label": "Full Load",
+        "children": []
+      },
+      {
+        "label": "Incremental Load",
+        "children": []
+      },
+      {
+        "label": "Event-driven Ingestion",
+        "children": []
+      }
+    ]
+  },
+  {
+    "id": "DE.05",
+    "name": "Data Transformation",
+    "children": [
+      {
+        "label": "ETL",
+        "children": []
+      },
+      {
+        "label": "ELT",
+        "children": []
+      },
+      {
+        "label": "SQL Transformations",
+        "children": []
+      },
+      {
+        "label": "Data Cleaning",
+        "children": []
+      },
+      {
+        "label": "Data Enrichment",
+        "children": []
+      },
+      {
+        "label": "Aggregations",
+        "children": []
+      },
+      {
+        "label": "Deduplication",
+        "children": []
+      },
+      {
+        "label": "Incremental Processing",
+        "children": []
+      },
+      {
+        "label": "MERGE / UPSERT",
+        "children": []
+      },
+      {
+        "label": "Business Rules",
+        "children": []
+      }
+    ]
+  },
+  {
+    "id": "DE.06",
+    "name": "Data Pipelines",
+    "children": [
+      {
+        "label": "Pipeline Design",
+        "children": []
+      },
+      {
+        "label": "DAG",
+        "children": []
+      },
+      {
+        "label": "Dependencies",
+        "children": []
+      },
+      {
+        "label": "Scheduling",
+        "children": []
+      },
+      {
+        "label": "Orchestration",
+        "children": []
+      },
+      {
+        "label": "Idempotency",
+        "children": []
+      },
+      {
+        "label": "Retry",
+        "children": []
+      },
+      {
+        "label": "Backfill",
+        "children": []
+      },
+      {
+        "label": "Replay",
+        "children": []
+      },
+      {
+        "label": "Error Handling",
+        "children": []
+      },
+      {
+        "label": "Dead Letter Queue",
+        "children": []
+      },
+      {
+        "label": "Checkpointing",
+        "children": []
+      },
+      {
+        "label": "Parameterization",
+        "children": []
+      }
+    ]
+  },
+  {
+    "id": "DE.07",
+    "name": "Storage & Table Formats",
+    "children": [
+      {
+        "label": "Object Storage",
+        "children": []
+      },
+      {
+        "label": "Block / File Storage",
+        "children": []
+      },
+      {
+        "label": "Database Storage",
+        "children": []
+      },
+      {
+        "label": "Columnar Storage",
+        "children": []
+      },
+      {
+        "label": "Partitioning",
+        "children": []
+      },
+      {
+        "label": "Bucketing",
+        "children": []
+      },
+      {
+        "label": "Clustering",
+        "children": []
+      },
+      {
+        "label": "Apache Iceberg",
+        "children": []
+      },
+      {
+        "label": "Delta Lake",
+        "children": []
+      },
+      {
+        "label": "Apache Hudi",
+        "children": []
+      }
+    ]
+  },
+  {
+    "id": "DE.08",
+    "name": "Databases",
+    "children": [
+      {
+        "label": "Relational Databases",
+        "children": [
+          "PostgreSQL",
+          "MySQL",
+          "SQL Server"
+        ]
+      },
+      {
+        "label": "NoSQL",
+        "children": [
+          "Document",
+          "Key-Value",
+          "Wide-column",
+          "Graph"
+        ]
+      },
+      {
+        "label": "OLTP vs OLAP",
+        "children": []
+      },
+      {
+        "label": "ACID",
+        "children": []
+      },
+      {
+        "label": "Transactions",
+        "children": []
+      },
+      {
+        "label": "Indexes",
+        "children": []
+      },
+      {
+        "label": "Query Optimisation",
+        "children": []
+      },
+      {
+        "label": "Distributed Databases",
+        "children": []
+      }
+    ]
+  },
+  {
+    "id": "DE.09",
+    "name": "SQL",
+    "children": [
+      {
+        "label": "SQL Fundamentals",
+        "children": []
+      },
+      {
+        "label": "JOIN",
+        "children": []
+      },
+      {
+        "label": "CTE",
+        "children": []
+      },
+      {
+        "label": "Window Functions",
+        "children": []
+      },
+      {
+        "label": "Subqueries",
+        "children": []
+      },
+      {
+        "label": "Aggregations",
+        "children": []
+      },
+      {
+        "label": "MERGE",
+        "children": []
+      },
+      {
+        "label": "Query Execution Plan",
+        "children": []
+      },
+      {
+        "label": "Indexing",
+        "children": []
+      },
+      {
+        "label": "SQL Performance",
+        "children": []
+      }
+    ]
+  },
+  {
+    "id": "DE.10",
+    "name": "Distributed Systems",
+    "children": [
+      {
+        "label": "Distributed Computing",
+        "children": []
+      },
+      {
+        "label": "Horizontal / Vertical Scaling",
+        "children": []
+      },
+      {
+        "label": "Partitioning / Sharding",
+        "children": []
+      },
+      {
+        "label": "Replication",
+        "children": []
+      },
+      {
+        "label": "Fault Tolerance",
+        "children": []
+      },
+      {
+        "label": "Consistency",
+        "children": []
+      },
+      {
+        "label": "CAP Theorem",
+        "children": []
+      },
+      {
+        "label": "Consensus",
+        "children": []
+      },
+      {
+        "label": "Parallel Processing",
+        "children": []
+      },
+      {
+        "label": "MapReduce",
+        "children": []
+      }
+    ]
+  },
+  {
+    "id": "DE.11",
+    "name": "Big Data Processing",
+    "children": [
+      {
+        "label": "Apache Spark",
+        "children": [
+          "Spark Architecture",
+          "DataFrame",
+          "Spark SQL",
+          "PySpark",
+          "Partitioning",
+          "Shuffle",
+          "Cache / Persist",
+          "Lazy Evaluation",
+          "Performance Tuning"
+        ]
+      },
+      {
+        "label": "Hadoop",
+        "children": []
+      },
+      {
+        "label": "MapReduce",
+        "children": []
+      }
+    ]
+  },
+  {
+    "id": "DE.12",
+    "name": "Streaming & Event Processing",
+    "children": [
+      {
+        "label": "Streaming Fundamentals",
+        "children": []
+      },
+      {
+        "label": "Apache Kafka",
+        "children": []
+      },
+      {
+        "label": "Producer / Consumer",
+        "children": []
+      },
+      {
+        "label": "Topic / Partition / Offset",
+        "children": []
+      },
+      {
+        "label": "Consumer Groups",
+        "children": []
+      },
+      {
+        "label": "Event Time / Processing Time",
+        "children": []
+      },
+      {
+        "label": "Windowing",
+        "children": []
+      },
+      {
+        "label": "Watermarking",
+        "children": []
+      },
+      {
+        "label": "Delivery Semantics",
+        "children": []
+      },
+      {
+        "label": "Schema Registry",
+        "children": []
+      }
+    ]
+  },
+  {
+    "id": "DE.13",
+    "name": "Data Quality",
+    "children": [
+      {
+        "label": "Data Profiling",
+        "children": []
+      },
+      {
+        "label": "Completeness",
+        "children": []
+      },
+      {
+        "label": "Accuracy",
+        "children": []
+      },
+      {
+        "label": "Consistency",
+        "children": []
+      },
+      {
+        "label": "Validity",
+        "children": []
+      },
+      {
+        "label": "Uniqueness",
+        "children": []
+      },
+      {
+        "label": "Timeliness",
+        "children": []
+      },
+      {
+        "label": "Null Analysis",
+        "children": []
+      },
+      {
+        "label": "Duplicate Detection",
+        "children": []
+      },
+      {
+        "label": "Data Validation",
+        "children": []
+      },
+      {
+        "label": "Data Testing",
+        "children": []
+      },
+      {
+        "label": "Anomaly Detection",
+        "children": []
+      }
+    ]
+  },
+  {
+    "id": "DE.14",
+    "name": "Data Governance",
+    "children": [
+      {
+        "label": "Data Catalog",
+        "children": []
+      },
+      {
+        "label": "Metadata Management",
+        "children": []
+      },
+      {
+        "label": "Data Lineage",
+        "children": []
+      },
+      {
+        "label": "Data Ownership",
+        "children": []
+      },
+      {
+        "label": "Data Classification",
+        "children": []
+      },
+      {
+        "label": "Data Retention",
+        "children": []
+      },
+      {
+        "label": "Master Data Management",
+        "children": []
+      },
+      {
+        "label": "Data Contracts",
+        "children": []
+      }
+    ]
+  },
+  {
+    "id": "DE.15",
+    "name": "Security",
+    "children": [
+      {
+        "label": "Authentication",
+        "children": []
+      },
+      {
+        "label": "Authorization",
+        "children": []
+      },
+      {
+        "label": "RBAC",
+        "children": []
+      },
+      {
+        "label": "IAM",
+        "children": []
+      },
+      {
+        "label": "Encryption",
+        "children": [
+          "At Rest",
+          "In Transit"
+        ]
+      },
+      {
+        "label": "Secrets Management",
+        "children": []
+      },
+      {
+        "label": "Data Masking",
+        "children": []
+      },
+      {
+        "label": "Row-Level Security",
+        "children": []
+      },
+      {
+        "label": "Column-Level Security",
+        "children": []
+      },
+      {
+        "label": "PII / Sensitive Data",
+        "children": []
+      }
+    ]
+  },
+  {
+    "id": "DE.16",
+    "name": "Orchestration",
+    "children": [
+      {
+        "label": "Apache Airflow",
+        "children": []
+      },
+      {
+        "label": "Dagster",
+        "children": []
+      },
+      {
+        "label": "Prefect",
+        "children": []
+      },
+      {
+        "label": "Azure Data Factory",
+        "children": []
+      },
+      {
+        "label": "DAG Design",
+        "children": []
+      },
+      {
+        "label": "Scheduling",
+        "children": []
+      },
+      {
+        "label": "Dependencies",
+        "children": []
+      },
+      {
+        "label": "Sensors / Triggers",
+        "children": []
+      },
+      {
+        "label": "Backfills",
+        "children": []
+      }
+    ]
+  },
+  {
+    "id": "DE.17",
+    "name": "Analytics Engineering",
+    "children": [
+      {
+        "label": "dbt",
+        "children": []
+      },
+      {
+        "label": "Staging / Intermediate / Marts",
+        "children": []
+      },
+      {
+        "label": "SQL Modeling",
+        "children": []
+      },
+      {
+        "label": "Incremental Models",
+        "children": []
+      },
+      {
+        "label": "Tests",
+        "children": []
+      },
+      {
+        "label": "Sources",
+        "children": []
+      },
+      {
+        "label": "Snapshots",
+        "children": []
+      },
+      {
+        "label": "Documentation",
+        "children": []
+      },
+      {
+        "label": "Semantic Layer",
+        "children": []
+      },
+      {
+        "label": "Metrics",
+        "children": []
+      }
+    ]
+  },
+  {
+    "id": "DE.18",
+    "name": "Cloud Data Engineering",
+    "children": [
+      {
+        "label": "Azure",
+        "children": [
+          "ADLS",
+          "Azure Data Factory",
+          "Synapse",
+          "Databricks",
+          "Event Hubs",
+          "Microsoft Fabric"
+        ]
+      },
+      {
+        "label": "AWS",
+        "children": [
+          "S3",
+          "Glue",
+          "Redshift",
+          "EMR",
+          "Kinesis"
+        ]
+      },
+      {
+        "label": "GCP",
+        "children": [
+          "Cloud Storage",
+          "BigQuery",
+          "Dataflow",
+          "Dataproc",
+          "Pub/Sub"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "DE.19",
+    "name": "Data Platforms",
+    "children": [
+      {
+        "label": "Databricks",
+        "children": []
+      },
+      {
+        "label": "Snowflake",
+        "children": []
+      },
+      {
+        "label": "Microsoft Fabric",
+        "children": []
+      },
+      {
+        "label": "BigQuery",
+        "children": []
+      },
+      {
+        "label": "Redshift",
+        "children": []
+      },
+      {
+        "label": "ClickHouse",
+        "children": []
+      },
+      {
+        "label": "DuckDB",
+        "children": []
+      }
+    ]
+  },
+  {
+    "id": "DE.20",
+    "name": "DevOps for Data",
+    "children": [
+      {
+        "label": "Git",
+        "children": []
+      },
+      {
+        "label": "GitHub / GitLab",
+        "children": []
+      },
+      {
+        "label": "CI/CD",
+        "children": []
+      },
+      {
+        "label": "Docker",
+        "children": []
+      },
+      {
+        "label": "Kubernetes",
+        "children": []
+      },
+      {
+        "label": "Infrastructure as Code",
+        "children": [
+          "Terraform",
+          "Bicep"
+        ]
+      },
+      {
+        "label": "Environments DEV / TEST / PROD",
+        "children": []
+      },
+      {
+        "label": "Deployment Strategies",
+        "children": []
+      }
+    ]
+  },
+  {
+    "id": "DE.21",
+    "name": "Testing",
+    "children": [
+      {
+        "label": "Unit Testing",
+        "children": []
+      },
+      {
+        "label": "Integration Testing",
+        "children": []
+      },
+      {
+        "label": "Data Testing",
+        "children": []
+      },
+      {
+        "label": "Pipeline Testing",
+        "children": []
+      },
+      {
+        "label": "Schema Testing",
+        "children": []
+      },
+      {
+        "label": "Regression Testing",
+        "children": []
+      },
+      {
+        "label": "End-to-End Testing",
+        "children": []
+      }
+    ]
+  },
+  {
+    "id": "DE.22",
+    "name": "Observability & Monitoring",
+    "children": [
+      {
+        "label": "Data Observability",
+        "children": []
+      },
+      {
+        "label": "Logs",
+        "children": []
+      },
+      {
+        "label": "Metrics",
+        "children": []
+      },
+      {
+        "label": "Traces",
+        "children": []
+      },
+      {
+        "label": "Alerting",
+        "children": []
+      },
+      {
+        "label": "Pipeline Monitoring",
+        "children": []
+      },
+      {
+        "label": "Data Freshness Monitoring",
+        "children": []
+      },
+      {
+        "label": "SLA / SLO / SLI",
+        "children": []
+      },
+      {
+        "label": "ELK",
+        "children": []
+      },
+      {
+        "label": "Grafana",
+        "children": []
+      },
+      {
+        "label": "Prometheus",
+        "children": []
+      }
+    ]
+  },
+  {
+    "id": "DE.23",
+    "name": "Performance & Optimization",
+    "children": [
+      {
+        "label": "Query Optimization",
+        "children": []
+      },
+      {
+        "label": "Partition Pruning",
+        "children": []
+      },
+      {
+        "label": "Predicate Pushdown",
+        "children": []
+      },
+      {
+        "label": "Indexing",
+        "children": []
+      },
+      {
+        "label": "Caching",
+        "children": []
+      },
+      {
+        "label": "Parallelism",
+        "children": []
+      },
+      {
+        "label": "Data Skew",
+        "children": []
+      },
+      {
+        "label": "Shuffle Optimization",
+        "children": []
+      },
+      {
+        "label": "File Size Optimization",
+        "children": []
+      },
+      {
+        "label": "Cost / Performance Trade-offs",
+        "children": []
+      }
+    ]
+  },
+  {
+    "id": "DE.24",
+    "name": "FinOps for Data",
+    "children": [
+      {
+        "label": "Cloud Cost Fundamentals",
+        "children": []
+      },
+      {
+        "label": "Cost Allocation",
+        "children": []
+      },
+      {
+        "label": "Tagging",
+        "children": []
+      },
+      {
+        "label": "Showback / Chargeback",
+        "children": []
+      },
+      {
+        "label": "Cost per Pipeline",
+        "children": []
+      },
+      {
+        "label": "Cost per Query",
+        "children": []
+      },
+      {
+        "label": "Cost per Dataset",
+        "children": []
+      },
+      {
+        "label": "Storage Optimization",
+        "children": []
+      },
+      {
+        "label": "Compute Optimization",
+        "children": []
+      },
+      {
+        "label": "FinOps for Databricks / Snowflake / Fabric",
+        "children": []
+      }
+    ]
+  },
+  {
+    "id": "DE.25",
+    "name": "Python for Data Engineering",
+    "children": [
+      {
+        "label": "Python Fundamentals",
+        "children": []
+      },
+      {
+        "label": "Pandas",
+        "children": []
+      },
+      {
+        "label": "PySpark",
+        "children": []
+      },
+      {
+        "label": "APIs",
+        "children": []
+      },
+      {
+        "label": "File Processing",
+        "children": []
+      },
+      {
+        "label": "Logging",
+        "children": []
+      },
+      {
+        "label": "Error Handling",
+        "children": []
+      },
+      {
+        "label": "Testing",
+        "children": []
+      },
+      {
+        "label": "Performance",
+        "children": []
+      }
+    ]
+  },
+  {
+    "id": "DE.26",
+    "name": "APIs & Data Exchange",
+    "children": [
+      {
+        "label": "REST API",
+        "children": []
+      },
+      {
+        "label": "HTTP",
+        "children": []
+      },
+      {
+        "label": "JSON",
+        "children": []
+      },
+      {
+        "label": "Authentication",
+        "children": []
+      },
+      {
+        "label": "Pagination",
+        "children": []
+      },
+      {
+        "label": "Rate Limiting",
+        "children": []
+      },
+      {
+        "label": "Retry",
+        "children": []
+      },
+      {
+        "label": "Webhooks",
+        "children": []
+      },
+      {
+        "label": "API Ingestion",
+        "children": []
+      }
+    ]
+  },
+  {
+    "id": "DE.27",
+    "name": "BI & Data Consumption",
+    "children": [
+      {
+        "label": "Power BI",
+        "children": []
+      },
+      {
+        "label": "Tableau",
+        "children": []
+      },
+      {
+        "label": "Semantic Models",
+        "children": []
+      },
+      {
+        "label": "Metrics / KPIs",
+        "children": []
+      },
+      {
+        "label": "Reporting",
+        "children": []
+      },
+      {
+        "label": "Serving Layer",
+        "children": []
+      }
+    ]
+  },
+  {
+    "id": "DE.28",
+    "name": "Glossary",
+    "children": [
+      {
+        "label": "Concepts",
+        "children": []
+      },
+      {
+        "label": "Acronyms",
+        "children": []
+      },
+      {
+        "label": "SQL Terms",
+        "children": []
+      },
+      {
+        "label": "Cloud Terms",
+        "children": []
+      },
+      {
+        "label": "Spark Terms",
+        "children": []
+      },
+      {
+        "label": "Architecture Terms",
+        "children": []
+      }
+    ]
+  }
+]

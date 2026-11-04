@@ -1,0 +1,16 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import KnowledgeCard from './KnowledgeCard.astro';
+import Icon from './Icon.astro';
+import { getCollection } from 'astro:content';
+import { spaceNames, type Space } from '../lib/knowledge';
+interface Props { space:Space; eyebrow:string; subtitle:string; description:string; badgeOne:string; badgeTwo:string; badgeThree:string; }
+const {space,eyebrow,subtitle,description,badgeOne,badgeTwo,badgeThree}=Astro.props;
+const all=(await getCollection('knowledge')).filter(x=>x.data.space===space).sort((a,b)=>b.data.updatedAt.getTime()-a.data.updatedAt.getTime());
+---
+<SiteLayout title={spaceNames[space]} active={space}>
+  <div class="pagehead"><div><div class="eyebrow">{eyebrow}</div><h1>{spaceNames[space]} <span class="muted">· {subtitle}</span></h1><p>{description}</p></div></div>
+  <div class="mini-kpis"><div class="mini-kpi"><b>{all.length}</b><span>Fiches disponibles</span></div><div class="mini-kpi"><b>{badgeOne}</b><span>Point d'entrée</span></div><div class="mini-kpi"><b>{badgeTwo}</b><span>Focus principal</span></div></div>
+  <div class="wide-callout"><div><h3>{badgeThree}</h3><p>Chaque source reste à son emplacement. Data Atlas crée un index et relie les informations aux topics correspondants.</p></div><a class="btn btn-outline" href="/guide/"><Icon name="plus" size={16}/> Ajouter une fiche</a></div>
+  {all.length?<div class="content-grid">{all.map(x=><KnowledgeCard item={x}/>)}</div>:<div class="empty-state">Aucune fiche pour le moment. Ajoute ton premier fichier Markdown.</div>}
+</SiteLayout>

@@ -1,0 +1,27 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import Icon from '../../components/Icon.astro';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import { entryUrl, topicName, kindNames, statusNames, spaceNames, displayDate } from '../../lib/knowledge';
+export async function getStaticPaths(){const entries=await getCollection('knowledge');return entries.map(entry=>({params:{id:entry.id},props:{entry}}));}
+interface Props { entry: CollectionEntry<'knowledge'> }
+const {entry}=Astro.props;
+const {Content}=await render(entry);
+const d=entry.data;
+const related=(await getCollection('knowledge')).filter(x=>d.relatedEntries.includes(x.id));
+---
+<SiteLayout title={d.title} active={d.space} description={d.description}>
+  <div class="topic-breadcrumb"><a href="/">Dashboard</a> / <a href={`/${d.space}/`}>{spaceNames[d.space]}</a> / {kindNames[d.kind]}</div>
+  <section class="article-header"><div class="eyebrow">{spaceNames[d.space]} · {kindNames[d.kind]}</div><h1>{d.title}</h1><p>{d.description}</p><div class="article-attributes"><span class="kind-pill">{statusNames[d.status]}</span><span class="muted-sm">Dernière mise à jour : {displayDate(d.updatedAt)}</span></div></section>
+  <div class="detail-layout"><article class="article-body" data-pagefind-body data-pagefind-filter={`space:${d.space}`}><Content />{related.length>0&&<><h2>Fiches liées</h2><ul>{related.map(e=><li><a href={entryUrl(e.id)}>{e.data.title}</a></li>)}</ul></>}</article>
+  <aside class="mini-panel meta-panel"><h3>Informations & mapping</h3><dl>
+  <div class="meta-field"><dt>Source</dt><dd>{d.source}</dd></div>
+  {d.author&&<div class="meta-field"><dt>Auteur</dt><dd>{d.author}</dd></div>}
+  {d.sourceUrl&&<div class="meta-field"><dt>Lien externe</dt><dd><a href={d.sourceUrl} target="_blank" rel="noopener noreferrer">Ouvrir la source <Icon name="external" size={13}/></a></dd></div>}
+  {d.sourceLocation&&<div class="meta-field"><dt>Emplacement</dt><dd>{d.sourceLocation}</dd></div>}
+  {d.primaryTopic&&<div class="meta-field"><dt>Topic principal</dt><dd><a href={`/knowledge-map/${d.primaryTopic}/`}>{d.primaryTopic} · {topicName(d.primaryTopic)}</a></dd></div>}
+  {d.relatedTopics.length>0&&<div class="meta-field"><dt>Topics associés</dt><dd>{d.relatedTopics.map(t=><div style="margin-bottom:5px"><a href={`/knowledge-map/${t}/`}>{t} · {topicName(t)}</a></div>)}</dd></div>}
+  <div class="meta-field"><dt>Tags</dt><dd><div class="tag-row">{d.tags.map(t=><span class="tag">{t}</span>)}</div></dd></div>
+  <div class="meta-field"><dt>Statut</dt><dd>{statusNames[d.status]}</dd></div>
+  </dl><a href="/guide/" class="btn btn-outline btn-small" style="margin-top:17px"><Icon name="refresh" size={15}/> Mettre à jour la fiche</a></aside></div>
+</SiteLayout>

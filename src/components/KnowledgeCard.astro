@@ -1,0 +1,17 @@
+---
+import Icon from './Icon.astro';
+import { entryUrl, kindNames, statusNames, spaceNames, spaceColors, displayDate } from '../lib/knowledge';
+import type { CollectionEntry } from 'astro:content';
+interface Props { item:CollectionEntry<'knowledge'>; }
+const {item}=Astro.props;
+const data=item.data;
+const icon=data.kind==='ebook'?'book':data.kind==='market-report'?'chart':data.kind==='article'?'newspaper':'file';
+const theme=spaceColors[data.space];
+---
+<article class="knowledge-card card">
+  <div class="card-meta"><span class:list={['item-leading',`soft-${theme}`]}><Icon name={icon} size={19}/></span><span class="kind-pill">{kindNames[data.kind]}</span><span style="margin-left:auto">{statusNames[data.status]}</span></div>
+  <h3><a href={entryUrl(item.id)}>{data.title}</a></h3>
+  <p>{data.description}</p>
+  <div class="tag-row">{data.tags.slice(0,3).map(t=><span class="tag">{t}</span>)}{data.primaryTopic&&<span class="tag orange">{data.primaryTopic}</span>}</div>
+  <footer><span>{spaceNames[data.space]} · {displayDate(data.updatedAt)}</span><a href={entryUrl(item.id)} class="link-arrow">Voir la fiche →</a></footer>
+</article>

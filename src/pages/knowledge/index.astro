@@ -1,0 +1,18 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import KnowledgeCard from '../../components/KnowledgeCard.astro';
+import { getCollection } from 'astro:content';
+const all=(await getCollection('knowledge')).sort((a,b)=>b.data.updatedAt.getTime()-a.data.updatedAt.getTime());
+---
+<SiteLayout title="Toutes les connaissances" active="all">
+  <div class="pagehead"><div><div class="eyebrow">KNOWLEDGE INDEX</div><h1>Toutes les ressources</h1><p>Un catalogue commun pour retrouver les articles, les livres, les notes et leurs relations aux domaines DE.</p></div></div>
+  <div class="filter-panel"><div class="filter-row"><input id="filterText" class="field" type="search" placeholder="Filtrer les fiches par titre, concept, tag..." aria-label="Filtrer les fiches" /><select id="filterSpace" class="select" aria-label="Espace"><option value="">Tous les espaces</option><option value="tech-watch">Tech Watch</option><option value="job-seeking">Job Seeking</option><option value="learning-lab">Learning Lab</option></select><select id="filterKind" class="select" aria-label="Type de ressource"><option value="">Tous les types</option><option value="article">Article</option><option value="market-report">Radar</option><option value="ebook">eBook</option><option value="note">Note</option><option value="concept">Concept</option></select></div><div class="filter-count" id="filterCount">{all.length} fiches</div></div>
+  <div class="content-grid" id="entriesGrid">{all.map(e=><div class="entry-container" data-space={e.data.space} data-kind={e.data.kind} data-search={(e.data.title+' '+e.data.description+' '+e.data.tags.join(' ')+' '+e.data.primaryTopic+' '+e.data.relatedTopics.join(' ')).toLocaleLowerCase('fr')}><KnowledgeCard item={e}/></div>)}</div>
+  <div id="noEntries" class="empty-state" hidden>Aucune fiche ne correspond aux filtres.</div>
+  <script is:inline>
+    (()=>{const q=document.getElementById('filterText'),s=document.getElementById('filterSpace'),k=document.getElementById('filterKind'),rows=[...document.querySelectorAll('.entry-container')],count=document.getElementById('filterCount'),empty=document.getElementById('noEntries');
+    const normalize=v=>v.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+    function refresh(){const needle=normalize(q.value.trim());let n=0;rows.forEach(row=>{const hit=(!needle||normalize(row.dataset.search||'').includes(needle))&&(!s.value||row.dataset.space===s.value)&&(!k.value||row.dataset.kind===k.value);row.hidden=!hit;if(hit)n++;});count.textContent=`${n} fiche${n>1?'s':''}`;empty.hidden=n!==0;}
+    [q,s,k].forEach(x=>x.addEventListener('input',refresh));})();
+  </script>
+</SiteLayout>

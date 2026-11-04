@@ -1,0 +1,19 @@
+---
+import Icon from './Icon.astro';
+import { entryUrl, kindNames, spaceNames, spaceColors, displayDate } from '../lib/knowledge';
+import type { CollectionEntry } from 'astro:content';
+interface Props { items:CollectionEntry<'knowledge'>[]; }
+const {items}=Astro.props;
+---
+<div class="table-wrap"><table class="data-table">
+  <thead><tr><th>Knowledge item</th><th>Type</th><th>Espace</th><th>DE mapping</th><th>Tags</th></tr></thead>
+  <tbody>
+    {items.map(item=>{
+      const d=item.data;const icon=d.kind==='ebook'?'book':d.kind==='market-report'?'chart':d.kind==='article'?'newspaper':'file';return <tr>
+      <td><div class="item-cell"><span class:list={['item-leading',`soft-${spaceColors[d.space]}`]}><Icon name={icon} size={20}/></span><div><a class="item-title" href={entryUrl(item.id)}>{d.title}</a><div class="item-sub">{d.source} · {displayDate(d.updatedAt)}</div></div></div></td>
+      <td><span class="kind-pill">{kindNames[d.kind]}</span></td><td>{spaceNames[d.space]}</td>
+      <td class="topic-code">{[d.primaryTopic,...d.relatedTopics].filter(Boolean).join(' · ')||'—'}</td>
+      <td><div class="tag-row">{d.tags.slice(0,2).map(tag=><span class="tag">{tag}</span>)}</div></td>
+    </tr>})}
+  </tbody>
+</table></div>

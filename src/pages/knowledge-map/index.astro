@@ -1,0 +1,20 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import Icon from '../../components/Icon.astro';
+import { getCollection } from 'astro:content';
+import { topics } from '../../lib/knowledge';
+const knowledge=await getCollection('knowledge');
+function flatten(children:any[]):string {return children.map(x=>x.label+' '+flatten(x.children||[])).join(' ');}
+---
+<SiteLayout title="DE Summary Map" active="knowledge-map">
+  <div class="pagehead"><div><div class="eyebrow">KNOWLEDGE TAXONOMY</div><h1>DE Summary · 28 domaines</h1><p>La structure DE Summary que tu as validée devient le référentiel de navigation. Nous conservons les domaines et sous-thèmes, en ajoutant uniquement des identifiants et des liens.</p></div></div>
+  <div class="wide-callout"><div><h3>Un plan stable, des connexions qui évoluent.</h3><p>Un eBook Spark peut référencer DE.11 et DE.23 simultanément, sans déplacer le PDF ni modifier le DE Summary.</p></div><a class="btn btn-outline" href="/library/">Voir les sources <Icon name="arrow" size={15}/></a></div>
+  <div class="filter-panel"><div class="filter-row"><input type="search" id="topicSearch" class="field" placeholder="Rechercher parmi les 28 domaines et leurs sous-thèmes..." aria-label="Rechercher un domaine"/><button class="btn btn-small" id="topicClear" type="button">Réinitialiser</button></div><div id="topicCounter" class="filter-count">28 domaines</div></div>
+  <div class="topic-grid" id="topicGrid">
+    {topics.map(t=>{const count=knowledge.filter(x=>x.data.primaryTopic===t.id||x.data.relatedTopics.includes(t.id)).length;return <a class="topic-card" href={`/knowledge-map/${t.id}/`} data-search={(t.id+' '+t.name+' '+flatten(t.children)).toLowerCase()}><code>{t.id}</code><h3>{t.name}</h3><p>{t.children.slice(0,4).map(x=>x.label).join(' · ')}{t.children.length>4?'…':''}</p><span class="topic-resource-count">{count} fiche{count!==1?'s':''} associée{count!==1?'s':''} →</span></a>})}
+  </div>
+  <p id="topicEmpty" class="empty-state" hidden>Aucun domaine correspondant.</p>
+  <script is:inline>
+    (()=>{const input=document.getElementById('topicSearch'),cards=[...document.querySelectorAll('.topic-card')],count=document.getElementById('topicCounter');const normalize=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();function update(){const q=normalize(input.value.trim());let n=0;cards.forEach(c=>{const hit=normalize(c.dataset.search||'').includes(q);c.hidden=!hit;n+=Number(hit);});count.textContent=`${n} domaine${n>1?'s':''}`;document.getElementById('topicEmpty').hidden=n!==0;}input.addEventListener('input',update);document.getElementById('topicClear').addEventListener('click',()=>{input.value='';update();input.focus();});})();
+  </script>
+</SiteLayout>

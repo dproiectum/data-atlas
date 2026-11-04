@@ -1,0 +1,73 @@
+---
+import '../styles/global.css';
+import Icon from '../components/Icon.astro';
+import type { Space } from '../lib/knowledge';
+interface Props { title?:string; description?:string; active?:string; }
+const { title='Data Atlas', description='Explore. Learn. Connect. — Knowledge Library', active='' }=Astro.props;
+const nav=[
+  {href:'/',label:'Dashboard',icon:'grid',key:'home'},
+  {href:'/knowledge/',label:'Toutes les ressources',icon:'layers',key:'all'},
+  {href:'/tech-watch/',label:'Tech Watch',icon:'newspaper',key:'tech-watch'},
+  {href:'/job-seeking/',label:'Job Seeking',icon:'briefcase',key:'job-seeking'},
+  {href:'/learning-lab/',label:'Learning Lab',icon:'book',key:'learning-lab'},
+  {href:'/knowledge-map/',label:'DE Summary Map',icon:'network',key:'knowledge-map'},
+  {href:'/library/',label:'Bibliothèque & sources',icon:'folder',key:'library'},
+  {href:'/guide/',label:'Ajouter / Mettre à jour',icon:'plus',key:'guide'}
+];
+---
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f8faff" />
+  <meta name="description" content={description} />
+  <meta name="robots" content="noindex,nofollow" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="icon" href="/icons/atlas.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/icons/atlas-192.png" />
+  <title>{title === 'Data Atlas' ? title : `${title} · Data Atlas`}</title>
+</head>
+<body>
+  <div class="frame">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Data Atlas, accueil">
+        <span class="brand-logo"><Icon name="layers" size={27} /></span>
+        <span><strong>Data Atlas</strong><small>Explore. Learn. Connect.</small></span>
+      </a>
+      <div class="top-actions">
+        <a class="top-search" href="/search/"><Icon name="search" size={18}/><span>Rechercher dans les connaissances...</span><kbd>⌘ K</kbd></a>
+        <a class="btn btn-outline top-link" href="/knowledge-map/"><Icon name="filter" size={17}/> Explorer les topics</a>
+        <a class="btn btn-primary top-link" href="/guide/"><Icon name="plus" size={17}/> Ajouter une connaissance</a>
+        <button type="button" class="mobile-menu-btn" id="menuToggle" aria-controls="sideNav" aria-expanded="false" aria-label="Afficher la navigation"><Icon name="menu" size={23}/></button>
+      </div>
+    </header>
+    <div class="app-shell">
+      <div id="backdrop" class="backdrop" hidden></div>
+      <aside class="sidebar" id="sideNav">
+        <nav class="side-panel" aria-label="Navigation principale">
+          <div class="nav-section-label">KNOWLEDGE LIBRARY</div>
+          {nav.map((item,index)=><>
+            {(index===2 || index===5) && <div class="nav-divider" />}
+            {(index===2 || index===5) && <div class="nav-section-label">{index===2?'WORKSPACES':'DISCOVER & MANAGE'}</div>}
+            <a href={item.href} class:list={['nav-item',{'is-active':item.key===active}]} aria-current={item.key===active?'page':undefined}><Icon name={item.icon} size={19}/><span>{item.label}</span>{item.key==='knowledge-map'&&<span class="side-count">28</span>}</a>
+          </>)}
+        </nav>
+        <section class="sidebar-note"><strong>Une bibliothèque, trois usages.</strong><p>Les eBooks restent dans OneDrive. Le DE Summary reste inchangé. Data Atlas relie les ressources et les notes.</p><a href="/guide/">Comprendre le workflow <span aria-hidden="true">→</span></a></section>
+        <div class="side-footer">DATA ATLAS · LOCAL FIRST · V1</div>
+      </aside>
+      <main class="main-content" id="main-content"><slot /></main>
+    </div>
+  </div>
+  <script is:inline>
+    (()=>{
+      const menu=document.getElementById('menuToggle'); const nav=document.getElementById('sideNav');const back=document.getElementById('backdrop');
+      function setMenu(open){nav?.classList.toggle('is-open',open); if(back) back.hidden=!open;menu?.setAttribute('aria-expanded',String(open));}
+      menu?.addEventListener('click',()=>setMenu(!nav?.classList.contains('is-open')));
+      back?.addEventListener('click',()=>setMenu(false));
+      document.addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();location.href='/search/';}if(e.key==='Escape')setMenu(false);});
+      if('serviceWorker' in navigator && (location.protocol==='https:' || location.hostname==='localhost'))window.addEventListener('load',()=>navigator.serviceWorker.register('/service-worker.js').catch(()=>{}));
+    })();
+  </script>
+</body>
+</html>

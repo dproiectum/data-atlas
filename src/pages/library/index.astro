@@ -1,0 +1,13 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import Icon from '../../components/Icon.astro';
+import {getCollection} from 'astro:content';
+import {entryUrl,kindNames} from '../../lib/knowledge';
+const sources=(await getCollection('knowledge')).filter(x=>['article','market-report','ebook'].includes(x.data.kind));
+---
+<SiteLayout title="Bibliothèque & sources" active="library">
+  <div class="pagehead"><div><div class="eyebrow">SOURCE REGISTRY</div><h1>Bibliothèque & références</h1><p>Un catalogue des sources d'apprentissage. Les PDF restent dans OneDrive ; les articles restent sur leur site d'origine ; Data Atlas ne stocke que leurs fiches et leurs liens.</p></div></div>
+  <div class="wide-callout"><div><h3>On ne déplace aucun livre.</h3><p>L'emplacement exact des PDF n'est renseigné que lorsqu'il est connu. Le regroupement ByteByteGo reste préservé.</p></div><a href="/guide/" class="btn btn-outline"><Icon name="plus" size={15}/> Ajouter une notice</a></div>
+  <div class="content-grid">{sources.map(x=><article class="source-card"><span class="source-icon"><Icon name={x.data.kind==='ebook'?'book':'newspaper'} size={24}/></span><div><div class="card-meta">{kindNames[x.data.kind]} · {x.data.source}</div><h3><a href={entryUrl(x.id)}>{x.data.title}</a></h3><p><b>Emplacement :</b> {x.data.sourceLocation||'Source externe (aucun chemin local renseigné)'}</p><p><b>Mapping :</b> {[x.data.primaryTopic,...x.data.relatedTopics].filter(Boolean).join(' · ')||'À compléter'}</p><div class="tag-row">{x.data.tags.slice(0,3).map(t=><span class="tag">{t}</span>)}</div></div></article>)}</div>
+  <section class="feature-block" style="margin-top:19px"><h3>Source of truth</h3><div class="principles"><div class="principle"><Icon name="folder"/><span><b>eBooks :</b> leur emplacement actuel OneDrive, sans copie publique du PDF.</span></div><div class="principle"><Icon name="file"/><span><b>Notes :</b> Markdown versionné dans ce projet Git.</span></div><div class="principle"><Icon name="network"/><span><b>Taxonomie :</b> 28 domaines du DE Summary référencés par leurs ID.</span></div><div class="principle"><Icon name="search"/><span><b>Recherche :</b> index reconstruit automatiquement depuis les notes.</span></div></div></section>
+</SiteLayout>

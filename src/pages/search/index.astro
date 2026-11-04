@@ -1,0 +1,43 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+---
+<SiteLayout title="Recherche globale" active="">
+  <div class="search-main">
+    <section class="search-hero"><div class="eyebrow">GLOBAL SEARCH</div><h1>Retrouver une connaissance.</h1><p>Recherche dans les fiches Markdown et les 28 domaines Data Engineering, tous espaces confondus.</p></section>
+    <div class="filter-panel"><div class="filter-row"><input class="search-input" type="search" id="q" placeholder="Ex. : Shuffle, Semantic Layer, Kafka, O'Reilly..." autofocus aria-label="Rechercher"/><select id="space" class="select" aria-label="Filtrer par espace"><option value="">Tous les espaces</option><option value="tech-watch">Tech Watch</option><option value="job-seeking">Job Seeking</option><option value="learning-lab">Learning Lab</option><option value="taxonomy">DE Summary Map</option></select></div><div class="filter-count" id="count">Saisis un mot pour lancer la recherche.</div></div>
+    <div class="search-list" id="results" aria-live="polite"></div><p class="search-hint">Les résultats proviennent de l'index local généré au build. Pagefind est également créé après <code>npm run build</code> pour la recherche intégrale sur les pages.</p>
+  </div>
+  <script is:inline>
+    (()=>{
+      let records=[];const q=document.getElementById('q'),space=document.getElementById('space'),results=document.getElementById('results'),count=document.getElementById('count');const normalize=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+      function escape(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+      function search(){const query=normalize(q.value.trim());const filter=space.value;const tokens=query.split(/\s+/).filter(Boolean);if(!query){results.innerHTML='';count.textContent='Saisis un mot pour lancer la recherche.';return;}
+        const found=records.map(x=>{if(filter&&x.space!==filter)return null;const title=normalize(x.title),tags=normalize(x.tags),body=normalize(x.description+' '+x.body);if(!tokens.every(w=>title.includes(w)||tags.includes(w)||body.includes(w)))return null;let score=0;for(const w of tokens){if(title.includes(w))score+=5;if(tags.includes(w))score+=3;if(body.includes(w))score+=1;}return {...x,score};}).filter(Boolean).sort((a,b)=>b.score-a.score).slice(0,70);
+        count.textContent=`${found.length} résultat${found.length>1?'s':''}${found.length===70?' (premiers résultats)':''}`;
+        results.innerHTML=found.length?found.map(x=>`<article class="search-result"><div class="card-meta">${escape(x.type)} · ${escape(x.source)}</div><h3><a href="${escape(x.url)}">${escape(x.title)}</a></h3><p>${escape(x.description)}</p><div class="tag-row">${x.topic?`<span class="tag orange">${escape(x.topic)}</span>`:''}${x.tags.split('|').filter(Boolean).slice(0,4).map(v=>`<span class="tag">${escape(v)}</span>`).join('')}</div></article>`).join(''):'<div class="empty-state">Aucun résultat. Essaie un concept plus large ou enlève un filtre.</div>';
+      }
+      fetch('/search-index.json').then(r=>{if(!r.ok)throw Error('Index indisponible');return r.json()}).then(data=>{records=[...data.knowledge.map(x=>({...x,title:x.title,description:x.description,space:x.space,tags:x.tags.join('|'),topic:x.primaryTopic||'',body:x.body||'',source:x.source,type:x.kind,url:'/knowledge/'+encodeURIComponent(x.id)+'/'})),...data.topics.map(x=>({...x,title:x.name,description:x.terms.slice(0,220),space:'taxonomy',tags:x.terms.replace(/ /g,'|').slice(0,350),topic:x.id,body:x.terms,source:'DE Summary',type:'Topic',url:'/knowledge-map/'+x.id+'/'}))];search();}).catch(()=>{count.textContent='Impossible de charger l’index de recherche. Utilise le serveur local Astro.'});
+      // En production, Pagefind enrichit les résultats par recherche intégrale.
+      // L'index JSON reste opérationnel en local (astro dev) ou si Pagefind n'est pas disponible.
+      let pagefindModule=null,token=0,timer;
+      async function enhanceWithPagefind(){
+        const current=++token,query=q.value.trim(),selected=space.value;
+        if(query.length<2||selected==='taxonomy')return;
+        try{
+          if(!pagefindModule)pagefindModule=import('/pagefind/pagefind.js');
+          const pf=await pagefindModule;
+          const options=selected?{filters:{space:[selected]}}:{};
+          const response=await pf.search(query,options);
+          const entries=await Promise.all((response.results||[]).slice(0,35).map(x=>x.data()));
+          if(current!==token||q.value.trim()!==query||space.value!==selected)return;
+          if(!entries.length)return;
+          const plain=s=>String(s||'').replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim();
+          results.innerHTML=entries.map(x=>`<article class="search-result"><div class="card-meta">Pagefind · fiche Markdown</div><h3><a href="${escape(x.url)}">${escape(x.meta?.title||x.title||'Ressource')}</a></h3><p>${escape(plain(x.excerpt))}</p></article>`).join('');
+          count.textContent=`${entries.length} résultat${entries.length>1?'s':''} · recherche intégrale Pagefind`;
+        }catch(e){/* Astro dev : Pagefind n'est généré qu'après npm run build. */}
+      }
+      function update(){search();clearTimeout(timer);timer=setTimeout(enhanceWithPagefind,180);}
+      q.addEventListener('input',update);space.addEventListener('change',update);const init=new URLSearchParams(location.search).get('q');if(init){q.value=init;update();}
+    })();
+  </script>
+</SiteLayout>
