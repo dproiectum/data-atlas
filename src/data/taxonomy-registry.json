@@ -1,0 +1,16 @@
+[
+  {
+    "id": "DE",
+    "name": "Data Engineering",
+    "label": "DE Summary Map",
+    "summaryPath": "/knowledge-map/",
+    "file": "de-summary.json"
+  },
+  {
+    "id": "AI",
+    "name": "AI Engineering",
+    "label": "AI Engineering Map",
+    "summaryPath": "/ai-map/",
+    "file": "ai-summary.json"
+  }
+]

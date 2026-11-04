@@ -2,7 +2,7 @@
 
 A personal knowledge library connecting **Tech Watch**, **Job Seeking** and **Learning Lab**.
 
-The 28-domain **DE Summary** is the reference taxonomy. Original eBooks stay in their existing OneDrive folders; Data Atlas stores notes, source references, tags and relationships.
+The unchanged 28-domain **DE Summary** and a complementary 7-domain **AI Engineering** map provide the reference taxonomies. Original eBooks stay in their existing OneDrive folders; Data Atlas stores notes, source references, tags and relationships.
 
 ## Local use without installation
 
@@ -35,6 +35,8 @@ GitHub Actions builds both languages and exports the `Data_Atlas_Local` artifact
 - `src/content/entries/`: canonical Markdown entries.
 - `src/content.config.ts`: content schema.
 - `src/data/de-summary.json`: unchanged taxonomy index, including stable `DE.XX` identifiers.
+- `src/data/ai-summary.json`: the seven complementary AI domains, using `AI.01` through `AI.07`.
+- `src/data/taxonomy-registry.json`: the shared registry used by the site and validation tools.
 - `src/i18n/interface-en.json`: English workspace and control labels shared by both editions.
 - `src/i18n/content-en.json`: reviewed English translations of French explanatory text.
 - `src/i18n/content-rich-en.json`: translations that preserve inline emphasis.
@@ -42,7 +44,7 @@ GitHub Actions builds both languages and exports the `Data_Atlas_Local` artifact
 - `scripts/build-languages.mjs`: creates the two compiled editions and language-specific search indexes.
 - `scripts/export-local.mjs`: makes all links and searches work directly from local files.
 
-To add content, copy a template into `src/content/entries/`, fill in its metadata and write the note. Keep the filename stable when updating it. Link entries using `primaryTopic`, `relatedTopics` and `relatedEntries`.
+To add content, copy a template into `src/content/entries/`, fill in its metadata and write the note. Keep the filename stable when updating it. Link entries using `primaryTopic`, `relatedTopics` and `relatedEntries`. Both DE and AI IDs are accepted, including mixed references such as `primaryTopic: "AI.04"` with `relatedTopics: ["DE.17", "AI.05"]`. Unknown IDs fail validation.
 
 Add English translations for new explanatory text in `src/i18n/content-en.json`. Translation is explicit: text without a translation remains in its original language. Technical names and the original DE Summary are preserved. Generated pages and search indexes are rebuilt automatically; intellectual summaries still need to be written and checked.
 
@@ -53,7 +55,7 @@ npm run validate
 npm run build:local
 ```
 
-Validation checks the five initial notes, their topic references and links. The build generates French and English pages, then Pagefind indexes both languages. The local edition embeds each language’s search data to avoid browser restrictions on fetching local files.
+Validation checks the five initial notes, their references across both taxonomies and their links. `npm test` covers mixed DE/AI mapping, unknown references and preservation of the original DE taxonomy. The build generates French and English pages, then Pagefind indexes both languages. The local edition embeds each language’s search data to avoid browser restrictions on fetching local files.
 
 ## Boundaries
 

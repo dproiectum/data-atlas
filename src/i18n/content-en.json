@@ -149,5 +149,11 @@
   "Articles Medium, blogs techniques et retours d’expérience : ce que disent les auteurs, ce que nous en discutons, et ce qu’on retient.": "Medium articles, technical blogs and practical lessons: what authors say, what we discuss and what we retain.",
   "Un article = une source ; une discussion = une connaissance à consolider.": "An article is a source; a discussion produces knowledge to consolidate.",
   "Aucun résultat. Essaie un concept plus large ou enlève un filtre.": "No results. Try a broader concept or remove a filter.",
-  "Impossible de charger l’index de recherche. Utilise le serveur local Astro.": "The search index could not be loaded. Open the site through its local server."
+  "Impossible de charger l’index de recherche. Utilise le serveur local Astro.": "The search index could not be loaded. Open the site through its local server.",
+  "Trois usages complémentaires, des référentiels reliés.": "Three complementary purposes, connected knowledge maps.",
+  "Un référentiel complémentaire pour les modèles, le RAG, les agents et leur exploitation. Il enrichit Data Atlas sans modifier les 28 domaines du DE Summary.": "A complementary reference plan for models, RAG, agents and their operation. It extends Data Atlas without changing the 28 DE Summary domains.",
+  "Une même fiche peut relier une définition métier à DE.17 et un agent SQL à AI.04. Les sources et les identifiants restent stables.": "The same note can connect a business definition to DE.17 and a SQL agent to AI.04. Sources and identifiers remain stable.",
+  "Sous-thèmes du référentiel AI Engineering. Les fiches peuvent également être liées aux domaines du DE Summary.": "Subtopics of the AI Engineering reference plan. Notes can also link to DE Summary domains.",
+  "Recherche dans les fiches Markdown, les 28 domaines Data Engineering et les 7 domaines AI Engineering, tous espaces confondus.": "Search Markdown notes, the 28 Data Engineering domains and the 7 AI Engineering domains across all workspaces.",
+  "28 domaines DE et 7 domaines AI référencés par leurs ID stables.": "28 DE domains and 7 AI domains referenced by stable identifiers."
 }

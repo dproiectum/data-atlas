@@ -1,0 +1,196 @@
+[
+  {
+    "id": "AI.01",
+    "name": "AI & Machine Learning Foundations",
+    "children": [
+      {
+        "label": "AI vs Machine Learning vs Deep Learning",
+        "children": []
+      },
+      {
+        "label": "Supervised / Unsupervised Learning",
+        "children": []
+      },
+      {
+        "label": "Reinforcement Learning",
+        "children": []
+      },
+      {
+        "label": "Training / Validation / Inference",
+        "children": []
+      },
+      {
+        "label": "Features / Labels / Datasets",
+        "children": []
+      }
+    ]
+  },
+  {
+    "id": "AI.02",
+    "name": "LLM & Generative AI",
+    "children": [
+      {
+        "label": "Transformers",
+        "children": []
+      },
+      {
+        "label": "Tokens & Context Windows",
+        "children": []
+      },
+      {
+        "label": "Prompt Engineering",
+        "children": []
+      },
+      {
+        "label": "Fine-tuning",
+        "children": []
+      },
+      {
+        "label": "Multimodal Models",
+        "children": []
+      }
+    ]
+  },
+  {
+    "id": "AI.03",
+    "name": "Retrieval & RAG",
+    "children": [
+      {
+        "label": "Embeddings",
+        "children": []
+      },
+      {
+        "label": "Vector Search",
+        "children": []
+      },
+      {
+        "label": "Chunking",
+        "children": []
+      },
+      {
+        "label": "Retrieval & Reranking",
+        "children": []
+      },
+      {
+        "label": "Retrieval-Augmented Generation",
+        "children": []
+      },
+      {
+        "label": "Grounding & Citations",
+        "children": []
+      }
+    ]
+  },
+  {
+    "id": "AI.04",
+    "name": "Agents & Harness Engineering",
+    "children": [
+      {
+        "label": "Tool Use",
+        "children": []
+      },
+      {
+        "label": "Agent Orchestration",
+        "children": []
+      },
+      {
+        "label": "Model Context Protocol (MCP)",
+        "children": []
+      },
+      {
+        "label": "Memory & State",
+        "children": []
+      },
+      {
+        "label": "Harness Engineering",
+        "children": []
+      },
+      {
+        "label": "Permissions & Execution Controls",
+        "children": []
+      }
+    ]
+  },
+  {
+    "id": "AI.05",
+    "name": "Evaluation & LLMOps",
+    "children": [
+      {
+        "label": "Evaluation Datasets",
+        "children": []
+      },
+      {
+        "label": "Quality & Reliability Tests",
+        "children": []
+      },
+      {
+        "label": "Observability & Tracing",
+        "children": []
+      },
+      {
+        "label": "Model & Prompt Versioning",
+        "children": []
+      },
+      {
+        "label": "CI/CD & Deployment",
+        "children": []
+      },
+      {
+        "label": "Production Monitoring",
+        "children": []
+      }
+    ]
+  },
+  {
+    "id": "AI.06",
+    "name": "Security & Governance",
+    "children": [
+      {
+        "label": "Access Control",
+        "children": []
+      },
+      {
+        "label": "Privacy & Data Protection",
+        "children": []
+      },
+      {
+        "label": "Prompt Injection",
+        "children": []
+      },
+      {
+        "label": "Responsible AI",
+        "children": []
+      },
+      {
+        "label": "AI Governance",
+        "children": []
+      }
+    ]
+  },
+  {
+    "id": "AI.07",
+    "name": "Cost & Performance",
+    "children": [
+      {
+        "label": "Token Costs",
+        "children": []
+      },
+      {
+        "label": "Latency & Throughput",
+        "children": []
+      },
+      {
+        "label": "Model Selection",
+        "children": []
+      },
+      {
+        "label": "Caching & Batching",
+        "children": []
+      },
+      {
+        "label": "Cost / Quality Trade-offs",
+        "children": []
+      }
+    ]
+  }
+]

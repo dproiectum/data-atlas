@@ -10,14 +10,16 @@
     "validate": "node scripts/validate-content.mjs",
     "add": "node scripts/new-entry.mjs",
     "build:local": "npm run build && node scripts/export-local.mjs",
-    "export:update": "node scripts/create-local-updater.mjs"
+    "export:update": "node scripts/create-local-updater.mjs",
+    "test": "node --test scripts/taxonomy.test.mjs"
   },
   "dependencies": {
     "astro": "^5.16.0"
   },
   "devDependencies": {
     "pagefind": "^1.3.0",
-    "parse5": "^8.1.0"
+    "parse5": "^8.1.0",
+    "yaml": "^2.9.1"
   },
   "engines": {
     "node": ">=20.3.0"

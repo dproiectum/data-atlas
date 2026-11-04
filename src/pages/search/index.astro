@@ -3,8 +3,8 @@ import SiteLayout from '../../layouts/SiteLayout.astro';
 ---
 <SiteLayout title="Recherche globale" active="">
   <div class="search-main">
-    <section class="search-hero"><div class="eyebrow">GLOBAL SEARCH</div><h1>Retrouver une connaissance.</h1><p>Recherche dans les fiches Markdown et les 28 domaines Data Engineering, tous espaces confondus.</p></section>
-    <div class="filter-panel"><div class="filter-row"><input class="search-input" type="search" id="q" placeholder="Ex. : Shuffle, Semantic Layer, Kafka, O'Reilly..." autofocus aria-label="Rechercher"/><select id="space" class="select" aria-label="Filtrer par espace"><option value="">Tous les espaces</option><option value="tech-watch">Tech Watch</option><option value="job-seeking">Job Seeking</option><option value="learning-lab">Learning Lab</option><option value="taxonomy">DE Summary Map</option></select></div><div class="filter-count" id="count">Saisis un mot pour lancer la recherche.</div></div>
+    <section class="search-hero"><div class="eyebrow">GLOBAL SEARCH</div><h1>Retrouver une connaissance.</h1><p>Recherche dans les fiches Markdown, les 28 domaines Data Engineering et les 7 domaines AI Engineering, tous espaces confondus.</p></section>
+    <div class="filter-panel"><div class="filter-row"><input class="search-input" type="search" id="q" placeholder="Ex. : Shuffle, Semantic Layer, Kafka, O'Reilly..." autofocus aria-label="Rechercher"/><select id="space" class="select" aria-label="Filtrer par espace"><option value="">Tous les espaces</option><option value="tech-watch">Tech Watch</option><option value="job-seeking">Job Seeking</option><option value="learning-lab">Learning Lab</option><option value="taxonomy:DE">DE Summary Map</option><option value="taxonomy:AI">AI Engineering Map</option></select></div><div class="filter-count" id="count">Saisis un mot pour lancer la recherche.</div></div>
     <div class="search-list" id="results" aria-live="polite"></div><p class="search-hint">Les résultats proviennent de l'index local généré au build. Pagefind est également créé après <code>npm run build</code> pour la recherche intégrale sur les pages.</p>
   </div>
   <script is:inline>
@@ -16,13 +16,13 @@ import SiteLayout from '../../layouts/SiteLayout.astro';
         count.textContent=`${found.length} result${found.length!==1?'s':''}${found.length===70?' (first results)':''}`;
         results.innerHTML=found.length?found.map(x=>`<article class="search-result"><div class="card-meta">${escape(x.type)} · ${escape(x.source)}</div><h3><a href="${escape(x.url)}">${escape(x.title)}</a></h3><p>${escape(x.description)}</p><div class="tag-row">${x.topic?`<span class="tag orange">${escape(x.topic)}</span>`:''}${x.tags.split('|').filter(Boolean).slice(0,4).map(v=>`<span class="tag">${escape(v)}</span>`).join('')}</div></article>`).join(''):'<div class="empty-state">Aucun résultat. Essaie un concept plus large ou enlève un filtre.</div>';
       }
-      fetch('/search-index.json').then(r=>{if(!r.ok)throw Error('Index indisponible');return r.json()}).then(data=>{records=[...data.knowledge.map(x=>({...x,title:x.title,description:x.description,space:x.space,tags:x.tags.join('|'),topic:x.primaryTopic||'',body:x.body||'',source:x.source,type:x.kind,url:'/knowledge/'+encodeURIComponent(x.id)+'/'})),...data.topics.map(x=>({...x,title:x.name,description:x.terms.slice(0,220),space:'taxonomy',tags:x.terms.replace(/ /g,'|').slice(0,350),topic:x.id,body:x.terms,source:'DE Summary',type:'Topic',url:'/knowledge-map/'+x.id+'/'}))];search();}).catch(()=>{count.textContent='Impossible de charger l’index de recherche. Utilise le serveur local Astro.'});
+      fetch('/search-index.json').then(r=>{if(!r.ok)throw Error('Index indisponible');return r.json()}).then(data=>{records=[...data.knowledge.map(x=>({...x,title:x.title,description:x.description,space:x.space,tags:x.tags.join('|'),topic:[x.primaryTopic,...x.relatedTopics].filter(Boolean).join(' · '),body:(x.body||'')+' '+[x.primaryTopic,...x.relatedTopics].filter(Boolean).join(' '),source:x.source,type:x.kind,url:'/knowledge/'+encodeURIComponent(x.id)+'/'})),...data.topics.map(x=>({...x,title:x.name,description:x.terms.slice(0,220),space:'taxonomy:'+x.taxonomy,tags:x.terms.replace(/ /g,'|').slice(0,350),topic:x.id,body:x.id+' '+x.terms,source:x.source,type:'Topic',url:'/knowledge-map/'+x.id+'/'}))];search();}).catch(()=>{count.textContent='Impossible de charger l’index de recherche. Utilise le serveur local Astro.'});
       // En production, Pagefind enrichit les résultats par recherche intégrale.
       // L'index JSON reste opérationnel en local (astro dev) ou si Pagefind n'est pas disponible.
       let pagefindModule=null,token=0,timer;
       async function enhanceWithPagefind(){
         const current=++token,query=q.value.trim(),selected=space.value;
-        if(query.length<2||selected==='taxonomy')return;
+        if(query.length<2||selected.startsWith('taxonomy:'))return;
         try{
           if(!pagefindModule)pagefindModule=import('/pagefind/pagefind.js');
           const pf=await pagefindModule;
@@ -32,8 +32,13 @@ import SiteLayout from '../../layouts/SiteLayout.astro';
           if(current!==token||q.value.trim()!==query||space.value!==selected)return;
           if(!entries.length)return;
           const plain=s=>String(s||'').replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim();
-          results.innerHTML=entries.map(x=>`<article class="search-result"><div class="card-meta">Pagefind · fiche Markdown</div><h3><a href="${escape(x.url)}">${escape(x.meta?.title||x.title||'Ressource')}</a></h3><p>${escape(plain(x.excerpt))}</p></article>`).join('');
-          count.textContent=`${entries.length} result${entries.length!==1?'s':''} · Pagefind full-text search`;
+          const existing=new Set([...results.querySelectorAll('h3 a')].map(a=>a.getAttribute('href')));
+          const extra=entries.filter(x=>!existing.has(x.url));
+          if(!extra.length)return;
+          if(!existing.size)results.innerHTML='';
+          results.insertAdjacentHTML('beforeend',extra.map(x=>`<article class="search-result"><div class="card-meta">Pagefind · fiche Markdown</div><h3><a href="${escape(x.url)}">${escape(x.meta?.title||x.title||'Ressource')}</a></h3><p>${escape(plain(x.excerpt))}</p></article>`).join(''));
+          const total=results.querySelectorAll('.search-result').length;
+          count.textContent=`${total} result${total!==1?'s':''}`;
         }catch(e){/* Astro dev : Pagefind n'est généré qu'après npm run build. */}
       }
       function update(){search();clearTimeout(timer);timer=setTimeout(enhanceWithPagefind,180);}

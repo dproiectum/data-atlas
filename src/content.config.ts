@@ -1,6 +1,9 @@
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
+import { allTopicIds } from './lib/knowledge';
+const allowedTopics = allTopicIds();
+const topicId = z.string().refine(id => allowedTopics.has(id), { message: 'Unknown taxonomy topic' });
 
 const knowledge = defineCollection({
   loader: glob({ base: './src/content/entries', pattern: '**/*.md' }),
@@ -16,8 +19,8 @@ const knowledge = defineCollection({
     author: z.string().optional(),
     publishedAt: z.coerce.date().optional(),
     updatedAt: z.coerce.date(),
-    primaryTopic: z.string().regex(/^DE\.\d{2}$/).optional(),
-    relatedTopics: z.array(z.string().regex(/^DE\.\d{2}$/)).default([]),
+    primaryTopic: topicId.optional(),
+    relatedTopics: z.array(topicId).default([]),
     tags: z.array(z.string()).default([]),
     relatedEntries: z.array(z.string()).default([])
   })

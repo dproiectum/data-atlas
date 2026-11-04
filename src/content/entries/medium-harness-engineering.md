@@ -7,9 +7,9 @@ status: "reading"
 source: "Medium · DataExpert"
 sourceUrl: "https://dataexpert.medium.com/data-agents-need-harness-engineering-more-than-a-new-model-511d0b30c1b9"
 author: "DataExpert"
-updatedAt: 2026-11-04
+updatedAt: 2026-11-05
 primaryTopic: "DE.17"
-relatedTopics: ["DE.14", "DE.15"]
+relatedTopics: ["DE.14", "DE.15", "AI.04", "AI.05"]
 tags: ["AI Agents", "Harness Engineering", "Semantic Layer", "Text-to-SQL"]
 relatedEntries: ["semantic-layer-sql-agents"]
 ---

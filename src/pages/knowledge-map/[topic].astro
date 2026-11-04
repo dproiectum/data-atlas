@@ -2,17 +2,19 @@
 import SiteLayout from '../../layouts/SiteLayout.astro';
 import KnowledgeCard from '../../components/KnowledgeCard.astro';
 import { getCollection } from 'astro:content';
-import {topics} from '../../lib/knowledge';
+import {topics, taxonomyForTopic} from '../../lib/knowledge';
 export function getStaticPaths(){return topics.map(topic=>({params:{topic:topic.id},props:{topic}}));}
 interface Topic {id:string;name:string;children:Array<any>}
 interface Props {topic:Topic}
 const {topic}=Astro.props;
+const taxonomy = taxonomyForTopic(topic.id)!;
+const isDE = taxonomy.id === "DE";
 const items=(await getCollection('knowledge')).filter(x=>x.data.primaryTopic===topic.id||x.data.relatedTopics.includes(topic.id));
 function expand(nodes:any[],depth=0):Array<{label:string;depth:number}>{return nodes.flatMap(n=>[{label:n.label,depth},...expand(n.children||[],depth+1)]);}
 const tree=expand(topic.children);
 ---
-<SiteLayout title={`${topic.id} ${topic.name}`} active="knowledge-map">
-  <div class="topic-breadcrumb"><a href="/knowledge-map/">DE Summary Map</a> / {topic.id}</div>
-  <div class="pagehead"><div><div class="eyebrow">{topic.id} · DATA ENGINEERING</div><h1>{topic.name}</h1><p>Contenu du plan original, présenté comme index. Les ressources ci-dessous sont liées par leurs métadonnées Markdown.</p></div></div>
-  <div class="topic-detail-grid"><section class="mini-panel"><h3>Sous-thèmes du DE Summary</h3><ul class="tree-list">{tree.map(n=><li class={`level-${Math.min(n.depth,3)}`}>{n.label}</li>)}</ul></section><section><div class="section-head"><div><h2>Ressources associées</h2><p>{items.length} fiche{items.length!==1?'s':''} liée{items.length!==1?'s':''} à {topic.id}</p></div></div>{items.length?<div style="display:grid;gap:12px">{items.map(x=><KnowledgeCard item={x}/>)}</div>:<div class="empty-state">Aucune fiche liée pour le moment. L'association se fera via <code>primaryTopic</code> ou <code>relatedTopics</code>.</div>}</section></div>
+<SiteLayout title={`${topic.id} ${topic.name}`} active={isDE?"knowledge-map":"ai-map"}>
+  <div class="topic-breadcrumb"><a href={taxonomy.summaryPath}>{taxonomy.label}</a> / {topic.id}</div>
+  <div class="pagehead"><div><div class="eyebrow">{topic.id} · {taxonomy.name.toUpperCase()}</div><h1>{topic.name}</h1><p>{isDE ? "Contenu du plan original, présenté comme index. Les ressources ci-dessous sont liées par leurs métadonnées Markdown." : "Sous-thèmes du référentiel AI Engineering. Les fiches peuvent également être liées aux domaines du DE Summary."}</p></div></div>
+  <div class="topic-detail-grid"><section class="mini-panel"><h3>{isDE?"DE Summary subtopics":"AI Engineering subtopics"}</h3><ul class="tree-list">{tree.map(n=><li class={`level-${Math.min(n.depth,3)}`}>{n.label}</li>)}</ul></section><section><div class="section-head"><div><h2>Ressources associées</h2><p>{items.length} fiche{items.length!==1?'s':''} liée{items.length!==1?'s':''} à {topic.id}</p></div></div>{items.length?<div style="display:grid;gap:12px">{items.map(x=><KnowledgeCard item={x}/>)}</div>:<div class="empty-state">Aucune fiche liée pour le moment. L'association se fera via <code>primaryTopic</code> ou <code>relatedTopics</code>.</div>}</section></div>
 </SiteLayout>

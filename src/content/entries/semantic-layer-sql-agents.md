@@ -5,9 +5,9 @@ space: "tech-watch"
 kind: "note"
 status: "reading"
 source: "Discussion autour d’un article Medium"
-updatedAt: 2026-11-04
+updatedAt: 2026-11-05
 primaryTopic: "DE.17"
-relatedTopics: ["DE.14", "DE.09"]
+relatedTopics: ["DE.14", "DE.09", "AI.04"]
 tags: ["Semantic Layer", "Text-to-SQL", "AI Agents", "Data Governance"]
 relatedEntries: ["medium-harness-engineering"]
 ---

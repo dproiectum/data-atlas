@@ -47,3 +47,13 @@ Contrôles de la copie locale : 829 liens valides ; recherche, filtres, 28 domai
 - Cloudflare remains deferred.
 
 Bilingual verification: 86 HTML files, 1,826 valid local links, working locale-specific search and same-page language switch. Updater tested on a copy of the previous edition; backup and custom files preserved.
+
+## AI Engineering — 5 November 2026
+
+- Added AI.01–AI.07 in a separate AI Engineering Map; the 28 DE domains are unchanged.
+- Shared taxonomy registry drives the schema, CLI, validation, topic pages and search.
+- The Harness Engineering article and Semantic Layer note now link to AI.04 alongside their existing DE topics; the article also links to AI.05.
+- Both language editions and the local updater include the new map.
+- GitHub source is updated; applying the updater to the Mac folder remains a user action. Cloudflare is deferred.
+
+AI verification: four taxonomy tests passed, both builds passed, 102 HTML files and 2,270 local links checked. FR/EN AI searches, seven AI pages and existing cross-references tested by DOM execution. The managed visual preview timed out, so visual browser QA remains unverified. The Mac updater was tested on a copy of the previous edition.

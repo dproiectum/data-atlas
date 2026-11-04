@@ -6,7 +6,7 @@ interface Props { items:CollectionEntry<'knowledge'>[]; }
 const {items}=Astro.props;
 ---
 <div class="table-wrap"><table class="data-table">
-  <thead><tr><th>Knowledge item</th><th>Type</th><th>Espace</th><th>DE mapping</th><th>Tags</th></tr></thead>
+  <thead><tr><th>Knowledge item</th><th>Type</th><th>Espace</th><th>Topic mapping</th><th>Tags</th></tr></thead>
   <tbody>
     {items.map(item=>{
       const d=item.data;const icon=d.kind==='ebook'?'book':d.kind==='market-report'?'chart':d.kind==='article'?'newspaper':'file';return <tr>

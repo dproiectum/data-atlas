@@ -3,7 +3,7 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 import Icon from '../components/Icon.astro';
 import KnowledgeTable from '../components/KnowledgeTable.astro';
 import { getCollection } from 'astro:content';
-import { topics } from '../lib/knowledge';
+import { deTopics, aiTopics } from '../lib/knowledge';
 const all=(await getCollection('knowledge')).sort((a,b)=>b.data.updatedAt.getTime()-a.data.updatedAt.getTime());
 const tw=all.filter(x=>x.data.space==='tech-watch').length;
 const jobs=all.filter(x=>x.data.space==='job-seeking').length;
@@ -20,13 +20,13 @@ const cards=[
     <div class="stat-card"><div class="stat-icon soft-violet"><Icon name="newspaper"/></div><div><strong>{tw}</strong><span>Tech Watch</span></div></div>
     <div class="stat-card"><div class="stat-icon soft-blue"><Icon name="chart"/></div><div><strong>{jobs}</strong><span>Job Seeking</span></div></div>
     <div class="stat-card"><div class="stat-icon soft-green"><Icon name="book"/></div><div><strong>{learning}</strong><span>Learning Lab</span></div></div>
-    <div class="stat-card"><div class="stat-icon soft-orange"><Icon name="network"/></div><div><strong>{topics.length}</strong><span>Domaines DE</span></div></div>
+    <div class="stat-card"><div class="stat-icon soft-orange"><Icon name="network"/></div><div><strong>{deTopics.length} + {aiTopics.length}</strong><span>DE / AI domains</span></div></div>
   </section>
-  <div class="section-head"><div><h2>Explore your workspaces</h2><p>Trois usages complémentaires, une taxonomie commune.</p></div></div>
+  <div class="section-head"><div><h2>Explore your workspaces</h2><p>Trois usages complémentaires, des référentiels reliés.</p></div></div>
   <section class="spaces">
     {cards.map(c=><a class="space-card" href={c.href}><span class:list={['space-icon',`soft-${c.theme}`]}><Icon name={c.icon} size={27}/></span><h3>{c.title}</h3><p>{c.desc}</p><div class="tag-row">{c.tags.map(tag=><span class:list={['tag',c.theme]}>{tag}</span>)}</div><span class="link-arrow">Explorer <Icon name="arrow" size={15}/></span></a>)}
   </section>
-  <section class="panel"><div class="panel-head"><div><h2>Recent knowledge</h2><p>Fiches du catalogue Markdown, pas un inventaire automatique de tes conversations.</p></div><a class="btn btn-small" href="/knowledge/">Voir tout <Icon name="arrow" size={15}/></a></div><KnowledgeTable items={all.slice(0,6)}/><div class="panel-foot"><span>{all.length} fiches présentes · {topics.length} domaines DE disponibles</span><a class="link-arrow" href="/knowledge-map/">Voir la Knowledge Map →</a></div></section>
+  <section class="panel"><div class="panel-head"><div><h2>Recent knowledge</h2><p>Fiches du catalogue Markdown, pas un inventaire automatique de tes conversations.</p></div><a class="btn btn-small" href="/knowledge/">Voir tout <Icon name="arrow" size={15}/></a></div><KnowledgeTable items={all.slice(0,6)}/><div class="panel-foot"><span>{all.length} fiches présentes · {deTopics.length} DE + {aiTopics.length} AI domains</span><a class="link-arrow" href="/knowledge-map/">Voir la Knowledge Map →</a></div></section>
   <div class="bottom-panels">
     <section class="mini-panel"><h3>From a source to knowledge</h3><div class="steps"><div class="step"><span class="step-no">1</span><div><strong>Lire et discuter</strong><small>Medium · O’Reilly · eBook · notes personnelles</small></div></div><div class="step"><span class="step-no">2</span><div><strong>Créer une fiche Markdown</strong><small>Résumé, analyse, source et concepts</small></div></div><div class="step"><span class="step-no">3</span><div><strong>Mapper et publier</strong><small>DE ID → Astro → GitHub → PWA</small></div></div></div></section>
     <section class="mini-panel"><h3>Design principles</h3><div class="principles"><div class="principle"><Icon name="check" size={16}/><span><b>DE Summary inchangé</b> : référentiel à 28 domaines.</span></div><div class="principle"><Icon name="check" size={16}/><span><b>eBooks inchangés</b> : PDFs conservés dans OneDrive.</span></div><div class="principle"><Icon name="check" size={16}/><span><b>Mapping extensible</b> : nouvelles fiches et nouveaux liens.</span></div><div class="principle"><Icon name="check" size={16}/><span><b>Local first</b> : édition Mac, consultation PWA sur mobile.</span></div></div></section>

@@ -53,8 +53,8 @@ for (const page of walk(output)) {
     html = replaceRequired(html, "url:'"+prefix+"/knowledge-map/'+x.id+'/'", "url:'../knowledge-map/'+x.id+'/index.html'");
     html = replaceRequired(html, 'async function enhanceWithPagefind(){', 'async function enhanceWithPagefind(){\n        return; // The embedded full-text JSON index works without file fetches.');
     html = html.replace(/<p class="search-hint">[\s\S]*?<\/p>/, '<p class="search-hint">'+(english
-      ? 'Search covers note titles, tags, full text and the 28 domains. The index is embedded in this page and works offline.'
-      : 'La recherche utilise les titres, tags et textes des fiches ainsi que les 28 domaines. Son index est inclus dans cette page et fonctionne hors connexion.')+'</p>');
+      ? 'Search covers note titles, tags, full text and the 28 DE domains and 7 AI domains. The index is embedded in this page and works offline.'
+      : 'La recherche utilise les titres, tags et textes des fiches ainsi que les 28 domaines DE et 7 domaines AI. Son index est inclus dans cette page et fonctionne hors connexion.')+'</p>');
   }
   if (path.relative(output, page) === path.join(english ? 'en' : '', 'guide', 'index.html')) {
     html = html.replace(/<section class="feature-block guide-prose"><h3>3\.[\s\S]*?<\/section>/,
@@ -74,7 +74,7 @@ fs.writeFileSync(path.join(output, 'README.md'), `# Data Atlas — Local Edition
 No installation or local server is required. Navigation, filters and search work offline.
 Workspace names and main controls stay in English in both content languages.
 Explanations, summaries and the five initial notes have French and English versions.
-The technical terms and 28-domain DE Summary are preserved.
+The technical terms and 28-domain DE Summary are preserved. The AI Engineering reference plan adds 7 domains.
 
 External source links require Internet. Original eBook PDFs are not included.
 This is a compiled snapshot; it does not automatically sync with GitHub or ChatGPT.

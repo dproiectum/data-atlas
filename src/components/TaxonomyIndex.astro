@@ -1,0 +1,30 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import Icon from './Icon.astro';
+import { getCollection } from 'astro:content';
+import { taxonomies, topicUrl, type TopicNode } from '../lib/knowledge';
+interface Props { taxonomyId: string; }
+const taxonomy = taxonomies.find(t => t.id === Astro.props.taxonomyId);
+if (!taxonomy) throw new Error('Unknown taxonomy: '+Astro.props.taxonomyId);
+const isDE = taxonomy.id === 'DE';
+const knowledge = await getCollection('knowledge');
+function flatten(children: TopicNode[]): string { return children.map(x => x.label+' '+flatten(x.children||[])).join(' '); }
+const description = isDE
+  ? 'La structure DE Summary que tu as validée devient le référentiel de navigation. Nous conservons les domaines et sous-thèmes, en ajoutant uniquement des identifiants et des liens.'
+  : 'Un référentiel complémentaire pour les modèles, le RAG, les agents et leur exploitation. Il enrichit Data Atlas sans modifier les 28 domaines du DE Summary.';
+---
+<SiteLayout title={taxonomy.label} active={isDE?'knowledge-map':'ai-map'}>
+  <div class="pagehead"><div><div class="eyebrow">KNOWLEDGE TAXONOMY</div><h1>{isDE?'DE Summary':'AI Engineering'} · {taxonomy.topics.length} domains</h1><p>{description}</p></div></div>
+  <div class="tag-row" style="margin-bottom:18px" aria-label="Knowledge maps">
+    {taxonomies.map(t => <a class:list={['btn',{'btn-primary':t.id===taxonomy.id}]} href={t.summaryPath} aria-current={t.id===taxonomy.id?'page':undefined}>{t.label}<span class="side-count">{t.topics.length}</span></a>)}
+  </div>
+  <div class="wide-callout"><div><h3>{isDE?'Un plan stable, des connexions qui évoluent.':'Data Engineering + AI Engineering'}</h3><p>{isDE?'Un eBook Spark peut référencer DE.11 et DE.23 simultanément, sans déplacer le PDF ni modifier le DE Summary.':'Une même fiche peut relier une définition métier à DE.17 et un agent SQL à AI.04. Les sources et les identifiants restent stables.'}</p></div><a class="btn btn-outline" href="/library/">Voir les sources <Icon name="arrow" size={15}/></a></div>
+  <div class="filter-panel"><div class="filter-row"><input type="search" id="topicSearch" class="field" placeholder="Search domains and subtopics..." aria-label="Search domains"/><button class="btn btn-small" id="topicClear" type="button">Réinitialiser</button></div><div id="topicCounter" class="filter-count">{taxonomy.topics.length} domains</div></div>
+  <div class="topic-grid" id="topicGrid">
+    {taxonomy.topics.map(t => { const count=knowledge.filter(x=>x.data.primaryTopic===t.id||x.data.relatedTopics.includes(t.id)).length; return <a class="topic-card" href={topicUrl(t.id)} data-search={(t.id+' '+t.name+' '+flatten(t.children)).toLowerCase()}><code>{t.id}</code><h3>{t.name}</h3><p>{t.children.slice(0,4).map(x=>x.label).join(' · ')}{t.children.length>4?'…':''}</p><span class="topic-resource-count">{count} linked {count===1?'note':'notes'} →</span></a>; })}
+  </div>
+  <p id="topicEmpty" class="empty-state" hidden>Aucun domaine correspondant.</p>
+  <script is:inline>
+    (()=>{const input=document.getElementById('topicSearch'),cards=[...document.querySelectorAll('.topic-card')],count=document.getElementById('topicCounter');const normalize=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();function update(){const q=normalize(input.value.trim());let n=0;cards.forEach(c=>{const hit=normalize(c.dataset.search||'').includes(q);c.hidden=!hit;n+=Number(hit);});count.textContent=`${n} domain${n!==1?'s':''}`;document.getElementById('topicEmpty').hidden=n!==0;}input.addEventListener('input',update);document.getElementById('topicClear').addEventListener('click',()=>{input.value='';update();input.focus();});})();
+  </script>
+</SiteLayout>

@@ -19,7 +19,7 @@ function translate(value, english) {
   if (exact !== undefined) text = exact;
   else if (text.includes(' · ')) text = text.split(' · ').map(t => translate(t, english)).join(' · ');
   text = text
-    .replace(/^(\d+) fiche(s)? liée(s)? à (DE\.\d{2})$/, (_, n, s, linked, id) => `${n} ${n === '1' ? 'note' : 'notes'} linked to ${id}`)
+    .replace(/^(\d+) fiche(s)? liée(s)? à ([A-Z][A-Z0-9_-]*\.\d{2})$/, (_, n, s, linked, id) => `${n} ${n === '1' ? 'note' : 'notes'} linked to ${id}`)
     .replace(/^(\d+) fiche(s)? associée(s)? →$/, (_, n) => `${n} linked ${n === '1' ? 'note' : 'notes'} →`)
     .replace(/^(\d+) fiches? présentes$/, '$1 entries')
     .replace(/^(\d+) domaines DE disponibles$/, '$1 DE domains')

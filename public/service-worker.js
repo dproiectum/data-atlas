@@ -1,6 +1,6 @@
 /* Data Atlas PWA — lecture seule, cache explicite sans sync ni upload */
-const VERSION='data-atlas-v1-20261104';
-const CORE=['/','/tech-watch/','/job-seeking/','/learning-lab/','/knowledge-map/','/knowledge/','/library/','/search/','/guide/','/search-index.json','/offline.html','/icons/atlas-192.png'];
+const VERSION='data-atlas-v1-ai-20261105';
+const CORE=['/','/tech-watch/','/job-seeking/','/learning-lab/','/knowledge-map/','/ai-map/','/knowledge/','/library/','/search/','/guide/','/search-index.json','/offline.html','/icons/atlas-192.png'];
 self.addEventListener('install',event=>event.waitUntil(caches.open(VERSION).then(async cache=>{for(const url of CORE){try{await cache.add(url)}catch(e){/* Déploiement partiel : continuer */}}}).then(()=>self.skipWaiting())));
 self.addEventListener('activate',event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==VERSION).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
 self.addEventListener('fetch',event=>{
