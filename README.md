@@ -26,6 +26,19 @@ Tu peux utiliser Git **déjà disponible sur ton Mac** pour modifier les Markdow
 
 **Prévisualisation Astro locale (facultative)** : uniquement si tu décides un jour d'installer Node.js sur le Mac, `npm install && npm run dev`. Ce n'est pas nécessaire pour publier et lire le site via GitHub + Cloudflare.
 
+## Consultation locale sans installation
+
+La version compilée locale s’ouvre en double-cliquant sur `index.html` dans le dossier exporté. Navigation, filtres et recherche fonctionnent directement depuis les fichiers, sans serveur ni installation Node.js sur le Mac.
+
+Pour produire cette copie dans un environnement de compilation Node.js :
+
+```bash
+npm ci
+npm run build:local
+```
+
+Le dossier `local-site/` contient le résultat à copier sur le Mac. Garder tous ses sous-dossiers avec `index.html`. Cette copie ne se synchronise pas automatiquement ; après modification des Markdown, il faut la régénérer. Les PDF ne sont pas inclus et les liens externes demandent Internet.
+
 ## Ajouter une ressource
 
 La voie **sans installation locale** consiste à copier l’un des fichiers de `templates/` vers `src/content/entries/<nom-unique>.md`, puis à remplacer ses métadonnées et son contenu. Une modification depuis l’éditeur GitHub fonctionne également.

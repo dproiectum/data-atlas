@@ -8,7 +8,8 @@
     "build": "node scripts/validate-content.mjs && astro build && pagefind --site dist",
     "preview": "astro preview --host 127.0.0.1",
     "validate": "node scripts/validate-content.mjs",
-    "add": "node scripts/new-entry.mjs"
+    "add": "node scripts/new-entry.mjs",
+    "build:local": "npm run build && node scripts/export-local.mjs"
   },
   "dependencies": {
     "astro": "^5.16.0"
