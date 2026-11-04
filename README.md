@@ -1,149 +1,68 @@
-# Data Atlas — Knowledge Library
+# Data Atlas
 
-**Local first · Astro · Markdown · GitHub · PWA**  
-URL cible (non déployée) : `https://dataatlas.allops.cloud`
+A personal knowledge library connecting **Tech Watch**, **Job Seeking** and **Learning Lab**.
 
-## Objectif
+The 28-domain **DE Summary** is the reference taxonomy. Original eBooks stay in their existing OneDrive folders; Data Atlas stores notes, source references, tags and relationships.
 
-Data Atlas relie trois espaces de connaissances :
+## Local use without installation
 
-- **Tech Watch** : blogs, Medium, retours d'expérience et synthèses critiques ;
-- **Job Seeking** : O'Reilly Radar, tendances, Job Scan et compétences ;
-- **Learning Lab** : eBooks, parcours d'apprentissage, concepts et exercices.
+Open `index.html` in the exported local folder. Keep all subfolders beside it. No Node.js installation or local server is required to browse this edition.
 
-**Les deux ressources de référence ne sont pas modifiées :**
+Choose **Français** or **English** in the header. Workspace names and main controls stay in English. Explanations, summaries and the five initial notes are available in French and English. Language links keep you on the same page and preserve the chosen language throughout navigation. The hosted site also remembers your preference when browser storage is available.
 
-1. **DE Summary** : ses 28 domaines et sous-thèmes sont répliqués uniquement dans `src/data/de-summary.json` pour la navigation et le mapping. Modifier cet index dans Atlas n'édite pas le DE Summary original.
-2. **Bibliothèque eBooks** : aucun PDF n'a été importé, déplacé ou renommé ; les notices contiennent simplement une référence à OneDrive.
+Search, filters and navigation work offline. External articles require Internet; original PDFs are not bundled. The local edition is a compiled snapshot, so editing source Markdown requires a new export.
 
-## Démarrage recommandé — sans installation Node.js sur Mac
+## Build
 
-Tu peux utiliser Git **déjà disponible sur ton Mac** pour modifier les Markdown et publier les changements. **Node.js et Astro seront exécutés sur Cloudflare Pages** lors du build distant, pas sur ton ordinateur.
-
-- [`docs/CHATGPT_ORGANISATION.md`](docs/CHATGPT_ORGANISATION.md) : noms des sections, dossiers et conversations ChatGPT (à appliquer manuellement dans l'interface).
-- [`docs/PUBLICATION_SANS_INSTALLATION.md`](docs/PUBLICATION_SANS_INSTALLATION.md) : dépôt GitHub, import des fichiers, Cloudflare Pages, domaine et PWA.
-- [`templates/`](templates/) : modèles à copier pour un article Medium, un Radar de marché ou un eBook.
-
-**Prévisualisation Astro locale (facultative)** : uniquement si tu décides un jour d'installer Node.js sur le Mac, `npm install && npm run dev`. Ce n'est pas nécessaire pour publier et lire le site via GitHub + Cloudflare.
-
-## Consultation locale sans installation
-
-La version compilée locale s’ouvre en double-cliquant sur `index.html` dans le dossier exporté. Navigation, filtres et recherche fonctionnent directement depuis les fichiers, sans serveur ni installation Node.js sur le Mac.
-
-Pour produire cette copie dans un environnement de compilation Node.js :
+In a Node.js build environment (Node 22 is configured):
 
 ```bash
 npm ci
 npm run build:local
 ```
 
-Le dossier `local-site/` contient le résultat à copier sur le Mac. Garder tous ses sous-dossiers avec `index.html`. Cette copie ne se synchronise pas automatiquement ; après modification des Markdown, il faut la régénérer. Les PDF ne sont pas inclus et les liens externes demandent Internet.
-
-## Ajouter une ressource
-
-La voie **sans installation locale** consiste à copier l’un des fichiers de `templates/` vers `src/content/entries/<nom-unique>.md`, puis à remplacer ses métadonnées et son contenu. Une modification depuis l’éditeur GitHub fonctionne également.
-
-Si Node.js est disponible dans un environnement de développement, le script ci-dessous permet de générer les mêmes fiches plus rapidement :
+The complete local edition is generated in `local-site/`. The regular web build is in `dist/`:
 
 ```bash
-# Article Medium
-npm run add -- \
-  --space tech-watch \
-  --kind article \
-  --title "My New Article" \
-  --source "Medium" \
-  --url "https://example.com/article" \
-  --topic DE.17 \
-  --related DE.14,DE.09 \
-  --tags "Semantic Layer,AI Agents"
-
-# Notice d'un livre : ne copie ou ne déplace pas le PDF.
-npm run add -- \
-  --space learning-lab \
-  --kind ebook \
-  --title "My Spark Book" \
-  --source "OneDrive eBooks" \
-  --topic DE.11 \
-  --related DE.23 \
-  --tags "Spark,Optimization"
+npm run build
+npm run dev      # optional source preview; bilingual editions are generated during build
 ```
 
-Ce script génère un fichier Markdown dans `src/content/entries/`. Ouvre-le pour compléter le résumé, les concepts et l'analyse. Les pages du site sont générées à partir du contenu au démarrage ou au prochain build.
+GitHub Actions builds both languages and exports the `Data_Atlas_Local` artifact. Cloudflare Pages deployment is deferred; the intended domain is `dataatlas.allops.cloud`.
 
-**Pour modifier une fiche**, édite directement le Markdown existant en conservant son nom de fichier, qui constitue son identifiant stable. Utilise `relatedEntries: [...]` avec les identifiants (noms de fichiers sans `.md`).
+## Content and translations
 
-## Vérifier et générer le site (sur Cloudflare ou environnement Node.js)
+- `src/content/entries/`: canonical Markdown entries.
+- `src/content.config.ts`: content schema.
+- `src/data/de-summary.json`: unchanged taxonomy index, including stable `DE.XX` identifiers.
+- `src/i18n/interface-en.json`: English workspace and control labels shared by both editions.
+- `src/i18n/content-en.json`: reviewed English translations of French explanatory text.
+- `src/i18n/content-rich-en.json`: translations that preserve inline emphasis.
+- `templates/`: starting points for articles, eBooks and market reports.
+- `scripts/build-languages.mjs`: creates the two compiled editions and language-specific search indexes.
+- `scripts/export-local.mjs`: makes all links and searches work directly from local files.
+
+To add content, copy a template into `src/content/entries/`, fill in its metadata and write the note. Keep the filename stable when updating it. Link entries using `primaryTopic`, `relatedTopics` and `relatedEntries`.
+
+Add English translations for new explanatory text in `src/i18n/content-en.json`. Translation is explicit: text without a translation remains in its original language. Technical names and the original DE Summary are preserved. Generated pages and search indexes are rebuilt automatically; intellectual summaries still need to be written and checked.
+
+## Validation
 
 ```bash
 npm run validate
-npm run build
-npm run preview
+npm run build:local
 ```
 
-`npm run build` effectue `astro build`, puis génère l'index **Pagefind** à partir des pages dans `dist/`. Un index JSON indépendant rend aussi la recherche fonctionnelle en développement. Le résultat `dist/` est un **site statique** : pas de base SQL, API ni CMS.
+Validation checks the five initial notes, their topic references and links. The build generates French and English pages, then Pagefind indexes both languages. The local edition embeds each language’s search data to avoid browser restrictions on fetching local files.
 
-> **Vérification :** compilation Astro complète réussie dans l’environnement de travail, 42 pages générées et cinq fiches indexées par Pagefind. Les dépendances exactes sont enregistrées dans `package-lock.json`. GitHub Actions répète la compilation sur les push vers `main` et sur les pull requests.
+## Boundaries
 
-## Organisation
+- No eBook PDF is moved, renamed or published.
+- No automatic import of conversations, Medium articles or job postings is configured.
+- The local edition is read-only; edit the source Markdown to update knowledge.
+- The PWA requires HTTPS and is separate from direct local-file browsing.
+- A public GitHub repository or `noindex` does not provide access protection for personal notes.
 
-```text
-data-atlas/
-├── public/
-│   ├── icons/                # Icône PWA
-│   ├── manifest.webmanifest
-│   ├── offline.html
-│   └── service-worker.js
-├── src/
-│   ├── components/           # UI réutilisable
-│   ├── content/
-│   │   └── entries/          # Articles, livres, notes Markdown
-│   ├── content.config.ts     # Schéma et validation Astro
-│   ├── data/
-│   │   └── de-summary.json   # Réplique de consultation des 28 domaines
-│   ├── layouts/
-│   ├── lib/
-│   ├── pages/                # Routes statiques
-│   └── styles/
-├── scripts/
-│   ├── new-entry.mjs        # Création de fiche CLI
-│   └── validate-content.mjs # Contrôle des références de mapping
-└── package.json
-```
+## Update an existing Mac folder
 
-## Publication (non effectuée)
-
-Option ciblée : **GitHub (public pour le moment, choix validé) → Cloudflare Pages → `dataatlas.allops.cloud`**.
-
-- Connecter un dépôt GitHub à Cloudflare Pages.
-- Framework : **Astro** ; Build command : `npm run build` ; Output : `dist`.
-- Configurer le sous-domaine personnalisé dans Cloudflare DNS.
-- **Avant la publication**, mettre en place Cloudflare Access si tes notes doivent rester privées. Un dépôt GitHub privé, ou la balise `noindex`, **ne protège pas** le site publié.
-- Éviter les informations confidentielles, chemins complets de ton Mac et PDF protégés par le droit d'auteur dans le répertoire `public/` et dans le Markdown publié.
-
-## PWA sur iPhone
-
-Après déploiement HTTPS, ouvre le site dans Safari puis utilise **Partager → Sur l'écran d'accueil**. La PWA est **en lecture seule**.
-
-- La page d'accueil et les espaces sont préchargés ; les fiches de détail sont mises en cache lors de leur première visite.
-- Le service worker tente d'abord la version réseau, puis les pages en cache quand Internet est indisponible.
-- Les notes nouvelles ne sont pas automatiquement synchronisées depuis ChatGPT. Elles doivent être converties en Markdown et publiées via Git.
-- Une mise à jour du site est normalement visible lors d'une prochaine consultation en ligne ; en cas de modification majeure du cache, changer la constante `VERSION` du service worker.
-
-## Cycle d'enrichissement
-
-1. Lire/discuter dans ChatGPT ou annoter un eBook.
-2. Créer ou compléter une fiche Markdown.
-3. Associer `primaryTopic`, `relatedTopics`, `tags` et éventuellement `relatedEntries`.
-4. Vérifier les métadonnées de la fiche, puis consulter le résultat du build Cloudflare après le push (`npm run build` inclut la validation).
-5. Après contrôle des différences Git, publier quand tu le souhaites.
-
-## Pas encore inclus dans la V1
-
-- Intégration directe des conversations ChatGPT ;
-- Import automatique d'articles Medium ou des PDF OneDrive ;
-- Job Scan connecté aux offres réelles ;
-- CMS et modification depuis mobile ;
-- Authentification Cloudflare Access configurée ;
-- Publication GitHub / DNS / Cloudflare.
-
-Ces éléments peuvent être ajoutés sans changer les fichiers Markdown existants.
+After building the local edition, run `npm run export:update` in the build environment. It generates `Data_Atlas_Update.command`, a self-contained updater. Running it on the Mac updates `/Users/dtl/Desktop/Data_Atlas_Local` by default, backs up the existing folder beside it and opens the homepage. It makes no network requests and does not need Node.js on the Mac. An optional first argument selects a different existing local-edition folder.

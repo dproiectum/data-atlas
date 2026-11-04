@@ -36,3 +36,14 @@ Résultat : https://github.com/dproiectum/data-atlas/actions/runs/41926142418
 Export compilé `local-site/` ouvrable par `index.html`, sans serveur ni Node.js sur le Mac. Liens relatifs et index de recherche embarqué ; mise à jour par nouvelle compilation. Génération : `npm run build:local`.
 
 Contrôles de la copie locale : 829 liens valides ; recherche, filtres, 28 domaines et menu vérifiés par exécution DOM. Rendu réel sur Safari/Mac à vérifier. GitHub Actions prépare une archive `Data_Atlas_Local` à chaque build réussi.
+
+## Bilingual local content — 5 November 2026
+
+- English README, workspace names and main controls.
+- French/English selector on each page, preserving the current note.
+- Explanations, summaries and five initial notes translated into English.
+- The 28-domain taxonomy and original Markdown preserved.
+- Self-contained updater prepared for `/Users/dtl/Desktop/Data_Atlas_Local`; the Mac folder is not accessible from this environment.
+- Cloudflare remains deferred.
+
+Bilingual verification: 86 HTML files, 1,826 valid local links, working locale-specific search and same-page language switch. Updater tested on a copy of the previous edition; backup and custom files preserved.

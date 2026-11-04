@@ -13,7 +13,7 @@ import SiteLayout from '../../layouts/SiteLayout.astro';
       function escape(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
       function search(){const query=normalize(q.value.trim());const filter=space.value;const tokens=query.split(/\s+/).filter(Boolean);if(!query){results.innerHTML='';count.textContent='Saisis un mot pour lancer la recherche.';return;}
         const found=records.map(x=>{if(filter&&x.space!==filter)return null;const title=normalize(x.title),tags=normalize(x.tags),body=normalize(x.description+' '+x.body);if(!tokens.every(w=>title.includes(w)||tags.includes(w)||body.includes(w)))return null;let score=0;for(const w of tokens){if(title.includes(w))score+=5;if(tags.includes(w))score+=3;if(body.includes(w))score+=1;}return {...x,score};}).filter(Boolean).sort((a,b)=>b.score-a.score).slice(0,70);
-        count.textContent=`${found.length} résultat${found.length>1?'s':''}${found.length===70?' (premiers résultats)':''}`;
+        count.textContent=`${found.length} result${found.length!==1?'s':''}${found.length===70?' (first results)':''}`;
         results.innerHTML=found.length?found.map(x=>`<article class="search-result"><div class="card-meta">${escape(x.type)} · ${escape(x.source)}</div><h3><a href="${escape(x.url)}">${escape(x.title)}</a></h3><p>${escape(x.description)}</p><div class="tag-row">${x.topic?`<span class="tag orange">${escape(x.topic)}</span>`:''}${x.tags.split('|').filter(Boolean).slice(0,4).map(v=>`<span class="tag">${escape(v)}</span>`).join('')}</div></article>`).join(''):'<div class="empty-state">Aucun résultat. Essaie un concept plus large ou enlève un filtre.</div>';
       }
       fetch('/search-index.json').then(r=>{if(!r.ok)throw Error('Index indisponible');return r.json()}).then(data=>{records=[...data.knowledge.map(x=>({...x,title:x.title,description:x.description,space:x.space,tags:x.tags.join('|'),topic:x.primaryTopic||'',body:x.body||'',source:x.source,type:x.kind,url:'/knowledge/'+encodeURIComponent(x.id)+'/'})),...data.topics.map(x=>({...x,title:x.name,description:x.terms.slice(0,220),space:'taxonomy',tags:x.terms.replace(/ /g,'|').slice(0,350),topic:x.id,body:x.terms,source:'DE Summary',type:'Topic',url:'/knowledge-map/'+x.id+'/'}))];search();}).catch(()=>{count.textContent='Impossible de charger l’index de recherche. Utilise le serveur local Astro.'});
@@ -33,7 +33,7 @@ import SiteLayout from '../../layouts/SiteLayout.astro';
           if(!entries.length)return;
           const plain=s=>String(s||'').replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim();
           results.innerHTML=entries.map(x=>`<article class="search-result"><div class="card-meta">Pagefind · fiche Markdown</div><h3><a href="${escape(x.url)}">${escape(x.meta?.title||x.title||'Ressource')}</a></h3><p>${escape(plain(x.excerpt))}</p></article>`).join('');
-          count.textContent=`${entries.length} résultat${entries.length>1?'s':''} · recherche intégrale Pagefind`;
+          count.textContent=`${entries.length} result${entries.length!==1?'s':''} · Pagefind full-text search`;
         }catch(e){/* Astro dev : Pagefind n'est généré qu'après npm run build. */}
       }
       function update(){search();clearTimeout(timer);timer=setTimeout(enhanceWithPagefind,180);}

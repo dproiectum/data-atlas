@@ -21,6 +21,22 @@ const nav=[
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#f8faff" />
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded',()=>{
+      const links=[...document.querySelectorAll('[data-language]')];
+      links.forEach(link=>link.addEventListener('click',()=>{
+        try{localStorage.setItem('data-atlas-language',link.dataset.language)}catch{}
+      }));
+      const explicit=new URLSearchParams(location.search).get('lang');
+      try{
+        if(explicit==='en'||explicit==='fr')localStorage.setItem('data-atlas-language',explicit);
+        else if(location.protocol!=='file:'&&location.pathname==='/'){
+          const saved=localStorage.getItem('data-atlas-language');
+          if(saved==='en')location.replace(links.find(a=>a.dataset.language==='en').href);
+        }
+      }catch{}
+    });
+  </script>
   <meta name="description" content={description} />
   <meta name="robots" content="noindex,nofollow" />
   <link rel="manifest" href="/manifest.webmanifest" />
@@ -36,6 +52,10 @@ const nav=[
         <span><strong>Data Atlas</strong><small>Explore. Learn. Connect.</small></span>
       </a>
       <div class="top-actions">
+        <nav class="language-switch" aria-label="Content language">
+          <a href={Astro.url.pathname+'?lang=fr'} data-language="fr" aria-current="true" lang="fr">Français</a>
+          <a href={'/en'+Astro.url.pathname+'?lang=en'} data-language="en" aria-current="false" lang="en">English</a>
+        </nav>
         <a class="top-search" href="/search/"><Icon name="search" size={18}/><span>Rechercher dans les connaissances...</span><kbd>⌘ K</kbd></a>
         <a class="btn btn-outline top-link" href="/knowledge-map/"><Icon name="filter" size={17}/> Explorer les topics</a>
         <a class="btn btn-primary top-link" href="/guide/"><Icon name="plus" size={17}/> Ajouter une connaissance</a>

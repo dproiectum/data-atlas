@@ -12,7 +12,7 @@ const all=(await getCollection('knowledge')).sort((a,b)=>b.data.updatedAt.getTim
   <script is:inline>
     (()=>{const q=document.getElementById('filterText'),s=document.getElementById('filterSpace'),k=document.getElementById('filterKind'),rows=[...document.querySelectorAll('.entry-container')],count=document.getElementById('filterCount'),empty=document.getElementById('noEntries');
     const normalize=v=>v.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
-    function refresh(){const needle=normalize(q.value.trim());let n=0;rows.forEach(row=>{const hit=(!needle||normalize(row.dataset.search||'').includes(needle))&&(!s.value||row.dataset.space===s.value)&&(!k.value||row.dataset.kind===k.value);row.hidden=!hit;if(hit)n++;});count.textContent=`${n} fiche${n>1?'s':''}`;empty.hidden=n!==0;}
+    function refresh(){const needle=normalize(q.value.trim());let n=0;rows.forEach(row=>{const hit=(!needle||normalize(row.dataset.search||'').includes(needle))&&(!s.value||row.dataset.space===s.value)&&(!k.value||row.dataset.kind===k.value);row.hidden=!hit;if(hit)n++;});count.textContent=`${n} entr${n===1?'y':'ies'}`;empty.hidden=n!==0;}
     [q,s,k].forEach(x=>x.addEventListener('input',refresh));})();
   </script>
 </SiteLayout>

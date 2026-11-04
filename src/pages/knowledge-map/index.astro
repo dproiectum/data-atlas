@@ -15,6 +15,6 @@ function flatten(children:any[]):string {return children.map(x=>x.label+' '+flat
   </div>
   <p id="topicEmpty" class="empty-state" hidden>Aucun domaine correspondant.</p>
   <script is:inline>
-    (()=>{const input=document.getElementById('topicSearch'),cards=[...document.querySelectorAll('.topic-card')],count=document.getElementById('topicCounter');const normalize=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();function update(){const q=normalize(input.value.trim());let n=0;cards.forEach(c=>{const hit=normalize(c.dataset.search||'').includes(q);c.hidden=!hit;n+=Number(hit);});count.textContent=`${n} domaine${n>1?'s':''}`;document.getElementById('topicEmpty').hidden=n!==0;}input.addEventListener('input',update);document.getElementById('topicClear').addEventListener('click',()=>{input.value='';update();input.focus();});})();
+    (()=>{const input=document.getElementById('topicSearch'),cards=[...document.querySelectorAll('.topic-card')],count=document.getElementById('topicCounter');const normalize=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();function update(){const q=normalize(input.value.trim());let n=0;cards.forEach(c=>{const hit=normalize(c.dataset.search||'').includes(q);c.hidden=!hit;n+=Number(hit);});count.textContent=`${n} domain${n!==1?'s':''}`;document.getElementById('topicEmpty').hidden=n!==0;}input.addEventListener('input',update);document.getElementById('topicClear').addEventListener('click',()=>{input.value='';update();input.focus();});})();
   </script>
 </SiteLayout>
