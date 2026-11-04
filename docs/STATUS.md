@@ -1,59 +1,43 @@
-# Data Atlas — Suivi des 7 étapes (4 novembre 2026)
+# Data Atlas — Project Status
 
-| Étape | État vérifié | Suite |
+Updated: 5 November 2026.
+
+| Step | Verified status | Remaining work |
 |---|---|---|
-| 1. Dossiers ChatGPT | Nomenclature documentée | Création manuelle dans l’interface |
-| 2. Dépôt GitHub | `dproiectum/data-atlas` créé par l’utilisateur ; public à sa demande | Accès accordé à l’application GitHub ; sources V1 importées sur `main` ; Sources : commit `a930c1e` ; GitHub Actions #1 réussi |
-| 3. Knowledge Mapping | 28 domaines DE et 5 fiches ; références contrôlées | Enrichir progressivement les fiches |
-| 4. Site Astro | Pages, navigation, recherche et PWA codées ; guide sans Node.js local corrigé | Compilation locale de contrôle réussie : 42 pages et cinq fiches indexées ; GitHub Actions #1 réussi (installation et build complets) |
-| 5. Ajout/mise à jour | Modèles Markdown et validation disponibles | GitHub Actions vérifie les push sur main et les PR |
-| 6. Cloudflare | Configuration prévue : `npm run build` / `dist` | Cloudflare reporté à la demande de l’utilisateur ; priorité à la consultation locale |
-| 7. Mobile PWA | Manifest, icônes et service worker préparés | Test réel après déploiement HTTPS |
+| 1. ChatGPT organization | Naming plan documented; sections and folders are available in the user's interface | The user will organize conversations progressively as topics arise |
+| 2. GitHub repository | Sources are on `dproiectum/data-atlas`, branch `main`; public visibility was requested by the user | Continue reviewing changes before commits |
+| 3. Knowledge mapping | Original 28-domain DE Summary preserved; separate seven-domain AI Engineering Map added | Enrich notes and connect new sources |
+| 4. Astro site | Navigation, resource pages, maps and bilingual content built | Visual checks on Safari/Mac remain to be completed |
+| 5. Content updates | Markdown templates, mixed DE/AI references and validation available | Add explicit translations when writing new French content |
+| 6. Cloudflare | Build configuration prepared: `npm run build` and `dist` | Deployment and DNS changes are deferred at the user's request |
+| 7. Mobile PWA | Manifest, icons and service worker prepared | Test after an HTTPS deployment |
 
-## Décisions
+## Decisions
 
-- Dépôt public autorisé par l’utilisateur pour le moment.
-- Pas d’installation Node.js sur le Mac ; compilation distante.
-- DE Summary original et bibliothèque eBooks conservés.
-- Aucun déploiement Cloudflare ni changement DNS effectué.
+- Do not modify the original DE Summary or the physical eBook library.
+- Keep the README and operational documentation in English.
+- Keep workspace names and main interface controls in English.
+- Offer French and English explanations, summaries and note content.
+- No Node.js installation is required on the user's Mac to browse the compiled local edition.
+- ChatGPT conversations and OneDrive PDFs are not imported automatically.
+- No Cloudflare deployment or DNS change has been performed.
 
-## Contrôles avant import
+## Local edition and updater
 
-- `npm run build` réussi : 42 pages Astro, cinq fiches Pagefind.
-- 871 liens internes contrôlés : aucun lien cassé.
-- Index JSON : cinq fiches et 28 domaines.
-- Simulation d’ajout Markdown réussie.
-- Rendu interactif sur navigateur et tests iPhone restant à effectuer.
+The `local-site/` export opens through `index.html` without a local server. It contains relative links and embedded search indexes. A new build is required after source changes.
 
-## Validation distante
+`Data_Atlas_Update.command` updates `/Users/dtl/Desktop/Data_Atlas_Local` by default. It first backs up the existing folder, then copies the compiled files into place. It removes the obsolete generated `LIRE_MOI.txt`; the English `README.md` is the current local guide. The removed guide remains in the backup.
 
-GitHub Actions #1 a réussi pour le commit `a930c1e9b627d819c7eabe33e04821417b037eee` : installation reproductible avec `npm ci`, validation des fiches, compilation Astro et indexation Pagefind.
+The updater cannot be applied to the user's Mac from the current execution environment. Running it on the Mac remains a user action.
 
-Résultat : https://github.com/dproiectum/data-atlas/actions/runs/41926142418
+## Verification
 
-## Version locale
+- Four taxonomy tests passed, including mixed DE/AI references and rejection of unknown IDs.
+- The DE taxonomy's original Git blob hash is unchanged.
+- Both language builds passed: 102 HTML files and 2,270 valid local links.
+- Locale-specific search, the same-page language switch, AI topic pages and existing cross-references passed DOM checks.
+- The updater was tested against a copy of the previous local edition; backups and custom files were preserved.
+- A managed visual preview timed out, so browser layout checks remain unverified.
+- GitHub Actions tests, build and artifact generation succeeded for the AI taxonomy commit.
 
-Export compilé `local-site/` ouvrable par `index.html`, sans serveur ni Node.js sur le Mac. Liens relatifs et index de recherche embarqué ; mise à jour par nouvelle compilation. Génération : `npm run build:local`.
-
-Contrôles de la copie locale : 829 liens valides ; recherche, filtres, 28 domaines et menu vérifiés par exécution DOM. Rendu réel sur Safari/Mac à vérifier. GitHub Actions prépare une archive `Data_Atlas_Local` à chaque build réussi.
-
-## Bilingual local content — 5 November 2026
-
-- English README, workspace names and main controls.
-- French/English selector on each page, preserving the current note.
-- Explanations, summaries and five initial notes translated into English.
-- The 28-domain taxonomy and original Markdown preserved.
-- Self-contained updater prepared for `/Users/dtl/Desktop/Data_Atlas_Local`; the Mac folder is not accessible from this environment.
-- Cloudflare remains deferred.
-
-Bilingual verification: 86 HTML files, 1,826 valid local links, working locale-specific search and same-page language switch. Updater tested on a copy of the previous edition; backup and custom files preserved.
-
-## AI Engineering — 5 November 2026
-
-- Added AI.01–AI.07 in a separate AI Engineering Map; the 28 DE domains are unchanged.
-- Shared taxonomy registry drives the schema, CLI, validation, topic pages and search.
-- The Harness Engineering article and Semantic Layer note now link to AI.04 alongside their existing DE topics; the article also links to AI.05.
-- Both language editions and the local updater include the new map.
-- GitHub source is updated; applying the updater to the Mac folder remains a user action. Cloudflare is deferred.
-
-AI verification: four taxonomy tests passed, both builds passed, 102 HTML files and 2,270 local links checked. FR/EN AI searches, seven AI pages and existing cross-references tested by DOM execution. The managed visual preview timed out, so visual browser QA remains unverified. The Mac updater was tested on a copy of the previous edition.
+Latest AI feature commit: `4e0f39f2b305b4851dda5194bbfbce32e1a28bc0`.

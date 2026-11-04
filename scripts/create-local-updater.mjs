@@ -8,6 +8,9 @@ import { fileURLToPath } from 'node:url';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const site = path.join(root, 'local-site');
 if (!fs.existsSync(path.join(site, 'en/index.html'))) throw new Error('Build the bilingual local edition first.');
+if (!fs.readFileSync(path.join(site, 'README.md'), 'utf8').startsWith('# Data Atlas — Local Edition')) {
+  throw new Error('The local edition must include its English README before an updater can be generated.');
+}
 const payload = execFileSync('tar', ['-czf', '-', '-C', site, '.'], { maxBuffer: 20 * 1024 * 1024 });
 const hash = createHash('sha256').update(payload).digest('hex');
 const encoded = payload.toString('base64').match(/.{1,76}/g).join('\n');
@@ -37,6 +40,9 @@ tar -xzf "$temp_dir/site.tar.gz" -C "$temp_dir/files"
 backup_dir="$(mktemp -d "\${target_dir}_Backup_XXXXXX")"
 cp -R "$target_dir/." "$backup_dir/"
 cp -R "$temp_dir/files/." "$target_dir/"
+# Remove the generated French guide left by the initial export. Its previous
+# contents remain available in the complete backup above. Other files stay.
+rm -f "$target_dir/LIRE_MOI.txt"
 printf 'Data Atlas updated: %s\\nBackup saved: %s\\nChoose Français or English in the header.\\n' "$target_dir" "$backup_dir"
 if [[ "$(uname -s)" == Darwin ]]; then open "$target_dir/index.html"; fi
 `;

@@ -68,3 +68,5 @@ Validation checks the five initial notes, their references across both taxonomie
 ## Update an existing Mac folder
 
 After building the local edition, run `npm run export:update` in the build environment. It generates `Data_Atlas_Update.command`, a self-contained updater. Running it on the Mac updates `/Users/dtl/Desktop/Data_Atlas_Local` by default, backs up the existing folder beside it and opens the homepage. It makes no network requests and does not need Node.js on the Mac. An optional first argument selects a different existing local-edition folder.
+
+Operational guides and README files are maintained in English, independently of the selected content language. The updater removes the obsolete generated `LIRE_MOI.txt` after backing up the existing local folder.
